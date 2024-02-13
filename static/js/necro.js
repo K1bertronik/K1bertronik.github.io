@@ -146,7 +146,6 @@ function AncientSeal(magicalDamage){
 
 function PoisonShield(magicalDamage){
     var damageLevels = [];
-    var healLevels = [];
 
     var percentageIncreases = [25.0, 30.0, 35.0, 40.0];
 

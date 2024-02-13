@@ -3,28 +3,29 @@ document.getElementById('calcForm').addEventListener('submit', function (event) 
 
     var physicalDamage = parseFloat(document.getElementById('physdmg').value) || 0;
     var health = parseFloat(document.getElementById('health').value) || 0;
-	var rage = parseFloat(document.getElementById('rage').value) || 0;
 		
     var eviscerationDamage = calculateDamage(Evisceration(physicalDamage));
     var otherworldBoostDamage = calculateDamage(OtherworldBoost(physicalDamage), false);
     var annihilationDamage = calculateDamage(Annihilation(physicalDamage));
-    var annihilationCritDamage = AnnihilationCrit(annihilationDamage, rage);
+    var annihilationCritDamage = calculateDamage(Annihilation(physicalDamage), true, true);
     var wideScopeDamage = WideScope(annihilationDamage);
+    var wideScopeCritDamage = WideScope(annihilationCritDamage);
 	var underworldHandDamage = calculateDamage(UnderworldHand(physicalDamage));
-	var explodionOfChaosDamage = calculateDamage(ExplodionOfChaos(physicalDamage, false));
-	var devastatingFlashDamage = calculateDamage(ExplodionOfChaos(physicalDamage, true));
+	var explosionOfChaosDamage = calculateDamage(ExplosionOfChaos(physicalDamage)[0]);
+	var explosionOfChaosDemonDamage = calculateDamage(ExplosionOfChaos(physicalDamage)[0], true, false, ExplosionOfChaos(physicalDamage)[1]);
 	
     updateDamageValues(eviscerationDamage, "eviscerationRow");
     updateDamageValues(otherworldBoostDamage, "otherworldBoostRow");
     updateDamageValues(annihilationDamage, "annihilationRow");
     updateDamageValues(annihilationCritDamage, "annihilationCritRow");
     updateDamageValues(wideScopeDamage, "widescopeRow");
+    updateDamageValues(wideScopeCritDamage, "widescopeCritRow");
     updateDamageValues(underworldHandDamage, "underworldHandRow");
-    updateDamageValues(explodionOfChaosDamage, "explosionOfChaosRow");
-    updateDamageValues(devastatingFlashDamage, "devastatingFlashRow");
+    updateDamageValues(explosionOfChaosDamage, "explosionOfChaosRow");
+    updateDamageValues(explosionOfChaosDemonDamage, "explosionOfChaosDemonRow");
 });
 
-function calculateDamage(skillDamageLevels, isInstantDamage=true) {
+function calculateDamage(skillDamageLevels, isInstantDamage=true, isCritical=false, bonusPenetration=[]) {
     var totalDamageLevels = [];
 	
 	var isPVPTarget = document.getElementById('pvpSwitch').checked;
@@ -34,7 +35,6 @@ function calculateDamage(skillDamageLevels, isInstantDamage=true) {
 
     var targetPhysicalDefence = parseFloat(document.getElementById('targetPhysicalDefence').value) || 0;
     targetPhysicalDefence = targetPhysicalDefence / (targetPhysicalDefence + 6500);
-    var targetPhysicalReduction = (penetration > targetPhysicalDefence) ? 0 : targetPhysicalDefence - penetration;
     var targetResilience = (isPVPTarget ? (parseFloat(document.getElementById('targetResilience').value) || 0) / 100 : 0);
 
     var talentDmgBonus = (isInstantDamage ? (parseFloat(document.getElementById('instDmgBonus').value) || 0) / 100 : (parseFloat(document.getElementById('dotDmgBonus').value) || 0) / 100);
@@ -42,11 +42,22 @@ function calculateDamage(skillDamageLevels, isInstantDamage=true) {
     var talentPVEDmgBonusI = (isPVPTarget ? 0 : (parseFloat(document.getElementById('pveBonusI').value) || 0) / 100);
     var talentPVEDmgBonusII = (isPVPTarget ? 0 : (parseFloat(document.getElementById('pveBonusII').value) || 0) / 100);
 
+    var dotPenBonus = (isInstantDamage ? 0 : (parseFloat(document.getElementById('dotPenBonus').value) || 0) / 100);
+    var instPenBonus = (!isInstantDamage ? 0 : (parseFloat(document.getElementById('instPenBonus').value) || 0) / 100);
+
     var castleDmg = (parseFloat(document.getElementById('castleDmg').value) || 0) / 100;
 
     for (var level = 0; level < skillDamageLevels.length; level++) {
         var skillDamage = skillDamageLevels[level];
-        var totalDamage = skillDamage * (1 - targetPhysicalReduction) * (1 + talentDmgBonus + talentPVEDmgBonusI + talentPVEDmgBonusII) * (1 - targetResilience) * (1 + ferocity) * (1 + castleDmg);
+        var bonusPenetrationValue = bonusPenetration.length > level ? (bonusPenetration[level] / 100) : 0;
+        var totalDamage = skillDamage * (1 - Math.max(0, targetPhysicalDefence - (penetration + dotPenBonus + instPenBonus + bonusPenetrationValue))) * (1 + talentDmgBonus + talentPVEDmgBonusI + talentPVEDmgBonusII) * (1 - targetResilience) * (1 + ferocity) * (1 + castleDmg);
+        if (isCritical) {
+            var critBoost = (parseFloat(document.getElementById('critBoost').value) || 0) / 100;
+            var rage = parseFloat(document.getElementById('rage').value) || 0;
+            var critBonusIncreases = [2.0, 2.5, 3.0, 3.5];
+            totalDamage = totalDamage * ((isPVPTarget ? 1.5: 2) - targetResilience + critBoost + rage * (critBonusIncreases[level] / 100));
+        }
+
         totalDamage = parseFloat(totalDamage.toFixed(2));
 
         totalDamageLevels.push(totalDamage);
@@ -118,23 +129,6 @@ function Annihilation(physicalDamage){
     return damageLevels;
 }
 
-function AnnihilationCrit(skillLevels, rage){
-    var damageLevels = [];
-	
-	var isPVPTarget = document.getElementById('pvpSwitch').checked;
-	
-	var critBoost = (parseFloat(document.getElementById('critBoost').value) || 0) / 100;
-	var targetResilience = (isPVPTarget ? (parseFloat(document.getElementById('targetResilience').value) || 0) / 100 : 0);
-    var critBonusIncreases = [2.0, 2.5, 3.0, 3.5];
-	
-    for (var level = 0; level < 4; level++) {
-		var damage = skillLevels[level] * ((isPVPTarget ? 1.5: 2) - targetResilience + critBoost + rage * (critBonusIncreases[level] / 100));
-        damageLevels.push(parseFloat(damage.toFixed(2)));
-    }
-
-    return damageLevels;
-}
-
 function WideScope(skillLevels){
     var damageLevels = [];
 
@@ -161,19 +155,21 @@ function UnderworldHand(physicalDamage){
     return damageLevels;
 }
 
-function ExplodionOfChaos(physicalDamage, isDevastating){
+function ExplosionOfChaos(physicalDamage){
     var damageLevels = [];
 
     var percentageIncreases = [120.0, 125.0, 130.0, 140.0];
+    var penetrationBonus = [4.0, 6.0, 8.0, 10.0];
 	
 	var explodionBonus = (parseFloat(document.getElementById('explodionBonus').value) || 0) / 100;
-	var devastatingFlashBonus = isDevastating ? 0.15 : 0;
+	var devastatingFlashBonus = (document.getElementById('devastatingFlashBonus').checked ? 0.15 : 0);
+
     for (var level = 0; level < 4; level++) {
         var damage = physicalDamage * (percentageIncreases[level] / 100 + explodionBonus) * (1 + devastatingFlashBonus);
         damageLevels.push(damage);
     }
 
-    return damageLevels;
+    return [damageLevels, penetrationBonus];
 }
 
 function updateDamageValues(damageList, rowId) {

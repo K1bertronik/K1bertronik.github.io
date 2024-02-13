@@ -39,11 +39,9 @@ function calculateDamage(skillDamageLevels, damageType, isInstantDamage=true, is
 
     var targetPhysicalDefence = parseFloat(document.getElementById('targetPhysicalDefence').value) || 0;
     targetPhysicalDefence = targetPhysicalDefence / (targetPhysicalDefence + 6500);
-    var targetPhysicalReduction = (penetration > targetPhysicalDefence) ? 0 : targetPhysicalDefence - penetration;
 
     var targetMagicalDefence = parseFloat(document.getElementById('targetMagicalDefence').value) || 0;
     targetMagicalDefence = targetMagicalDefence / (targetMagicalDefence + 6500);
-    var targetMagicalReduction = (penetration > targetMagicalDefence) ? 0 : targetMagicalDefence - penetration;
 
     var targetResilience = (isPVPTarget ? (parseFloat(document.getElementById('targetResilience').value) || 0) / 100 : 0);
 
@@ -52,11 +50,14 @@ function calculateDamage(skillDamageLevels, damageType, isInstantDamage=true, is
     var talentPVEDmgBonusI = (isPVPTarget || isTalent ? 0 : (parseFloat(document.getElementById('pveBonusI').value) || 0) / 100);
     var talentPVEDmgBonusII = (isPVPTarget ? 0 : (parseFloat(document.getElementById('pveBonusII').value) || 0) / 100);
 
+    var dotPenBonus = (isInstantDamage ? 0 : (parseFloat(document.getElementById('dotPenBonus').value) || 0) / 100);
+    var instPenBonus = (!isInstantDamage ? 0 : (parseFloat(document.getElementById('instPenBonus').value) || 0) / 100);
+
     var castleDmg = (parseFloat(document.getElementById('castleDmg').value) || 0) / 100;
 
     for (var level = 0; level < skillDamageLevels.length; level++) {
         var skillDamage = skillDamageLevels[level];
-        var totalDamage = skillDamage * (damageType === 'physical' ? (1 - targetPhysicalReduction) : (1 - targetMagicalReduction)) * (1 + talentDmgBonus + talentPVEDmgBonusI + talentPVEDmgBonusII) * (1 - targetResilience) * (1 + ferocity) * (1 + castleDmg);
+        var totalDamage = skillDamage * (1 - Math.max(0, (damageType === 'physical' ? targetPhysicalDefence : targetMagicalDefence) - (penetration + dotPenBonus + instPenBonus))) * (1 + talentDmgBonus + talentPVEDmgBonusI + talentPVEDmgBonusII) * (1 - targetResilience) * (1 + ferocity) * (1 + castleDmg);
 
         totalDamage = parseFloat(totalDamage.toFixed(2));
 

@@ -26,7 +26,7 @@ document.getElementById('calcForm').addEventListener('submit', function (event) 
     updateDamageValues(echoOfForsakenDamage, "echoOfForsakenRow");
 });
 
-function calculateDamage(skillDamageLevels, damageType, isInstantDamage=true, isTalent=false) {
+function calculateDamage(skillDamageLevels, damageType, isTalent=false) {
     var totalDamageLevels = [];
 
     var isPVPTarget = document.getElementById('pvpSwitch').checked;
