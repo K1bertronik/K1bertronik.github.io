@@ -32,8 +32,8 @@
                         <h2>Your stats</h2>
                         <div class="form-group">
                             <div class="input-group">
-                                <img src="/static/images/icons/95.webp" class="img-fluid" alt="icon">
-                                <input type="number" class="form-control" id="physdmg" step="any">
+                                <img src="/static/images/icons/897.webp" class="img-fluid" alt="icon">
+                                <input type="number" class="form-control" id="magicdmg" step="any">
                             </div>
                         </div>
                         <div class="form-group">
@@ -54,20 +54,13 @@
                                 <input type="number" class="form-control" id="health" step="any">
                             </div>
                         </div>
-						<div class="form-group">
-                            <div class="input-group">
-                                <img src="/static/images/icons/3828.webp" class="img-fluid" alt="icon">
-                                <input type="number" class="form-control" id="critBoost" step="any">
-                            </div>
-                        </div>
-						<div class="form-group">
-                            <div class="input-group">
-                                <img src="/static/images/reaper/rage.png" class="img-fluid" alt="icon">
-                                <input type="number" class="form-control" id="rage" min="0" max="16">
-                            </div>
-                        </div>
                         <div class="form-group d-flex align-items-center">
-                            <img src="/static/images/icons/4064.webp" alt="Castle attack">
+                            <img src="/static/images/icons/6939.webp" alt="Drunk with Light">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="drunkLightBonus">
+                                <label class="custom-control-label" for="drunkLightBonus">15%</label>
+                            </div>
+                            <img src="/static/images/icons/4064.webp" alt="Castle attack" style="margin-left: 27px;">
                             <select id="castleDmg" class="form-select">
                                 <option value="0">0%</option>
                                 <option value="5">5%</option>
@@ -99,43 +92,8 @@
                                 <option value="60">60%</option>
                             </select>
                         </div>
+
                         <h2>Your talents</h2>
-                        <div class="form-group">
-                            <img src="/static/images/icons/5867.webp" alt="Long death">
-                            <select id="dotDmgBonus" class="form-select">
-                                <option value="0">0%</option>
-                                <option value="0.5">0.5%</option>
-                                <option value="1">1%</option>
-                                <option value="1.5">1.5%</option>
-                                <option value="2">2%</option>
-                            </select>
-
-                            <img src="/static/images/icons/5869.webp" alt="Moment of power">
-                            <select id="instDmgBonus" class="form-select">
-                                <option value="0">0%</option>
-                                <option value="0.5">0.5%</option>
-                                <option value="1">1%</option>
-                                <option value="1.5">1.5%</option>
-                                <option value="2">2%</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <img src="/static/images/icons/6990.webp" alt="Incessant penetration">
-                            <select id="dotPenBonus" class="form-select">
-                                <option value="0">0%</option>
-                                <option value="0.25">0.25%</option>
-                                <option value="0.5">0.5%</option>
-                                <option value="0.75">0.75%</option>
-                            </select>
-
-                            <img src="/static/images/icons/5865.webp" alt="Instant penetration">
-                            <select id="instPenBonus" class="form-select">
-                                <option value="0">0%</option>
-                                <option value="0.25">0.25%</option>
-                                <option value="0.5">0.5%</option>
-                                <option value="0.75">0.75%</option>
-                            </select>
-                        </div>
                         <div class="form-group">
                             <img src="/static/images/icons/5924.webp" alt="Bestial rage">
                             <select id="pveBonusI" class="form-select">
@@ -153,44 +111,88 @@
                                 <option value="2">2%</option>
                             </select>
                         </div>
+                        <div class="form-group">
+                            <img src="/static/images/icons/5889.webp" alt="Healing Power">
+                            <select id="healBonus" class="form-select">
+                                <option value="0">0%</option>
+                                <option value="1">1%</option>
+                                <option value="2">2%</option>
+                                <option value="3">3%</option>
+                            </select>
+                        </div>
                         <div class="form-group d-flex align-items-center">
-                            <img src="/static/images/icons/6378.webp" alt="Evisceration +">
+                            <img src="/static/images/icons/2523.webp" alt="Holy Shield +">
                             <div class="custom-control custom-switch">
-                                <input type="checkbox" class="custom-control-input" id="eviscerationBonus">
-                                <label class="custom-control-label" for="eviscerationBonus">5%</label>
+                                <input type="checkbox" class="custom-control-input" id="holyShieldBonus">
+                                <label class="custom-control-label" for="holyShieldBonus">10%</label>
                             </div>
-                            <img src="/static/images/icons/6378.webp" alt="Evisceration + (I/II)" style="margin-left: 35px;">
-                            <select id="eviscerationBonusII" class="form-select">
+                        </div>
+                        <div class="form-group d-flex align-items-center">
+                            <img src="/static/images/icons/2521.webp" alt="Harads Tears +">
+                            <select id="haradsTearsBonus" class="form-select">
+                                <option value="0">0%</option>
+                                <option value="2">2%</option>
+                                <option value="3.5">3.5%</option>
+                                <option value="5">5%</option>
+                            </select>
+                        </div>
+                        <div class="form-group d-flex align-items-center">
+                            <img src="/static/images/icons/2521.webp" alt="Harads Tears + (I)">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="haradsTearsBonusI">
+                                <label class="custom-control-label" for="haradsTearsBonusI">7.5% (I)</label>
+                            </div>
+                            <img src="/static/images/icons/2521.webp" alt="Harads Tears + (II/III)" style="margin-left: 5px;">
+                            <select id="haradsTearsBonusII" class="form-select">
                                 <option value="0">0%</option>
                                 <option value="2.5">2.5%</option>
                                 <option value="5">5%</option>
                                 <option value="7.5">7.5%</option>
-                            </select>(I/II)
-                        </div>
-                        <div class="form-group">
-                            <img src="/static/images/icons/6392.webp" alt="Explodion of Chaos +">
-                            <select id="explodionBonus" class="form-select">
-                                <option value="0">0%</option>
-                                <option value="2">2%</option>
-                                <option value="4">4%</option>
-                                <option value="6">6%</option>
-                            </select>
+                            </select>(II/III)
                         </div>
                         <div class="form-group d-flex align-items-center">
-                            <img src="/static/images/icons/6393.webp" alt="Devastating Flash">
+                            <img src="/static/images/icons/3461.webp" alt="Mystic Mark +">
                             <div class="custom-control custom-switch">
-                                <input type="checkbox" class="custom-control-input" id="devastatingFlashBonus">
-                                <label class="custom-control-label" for="devastatingFlashBonus">15%</label>
+                                <input type="checkbox" class="custom-control-input" id="mysticMarkBonus">
+                                <label class="custom-control-label" for="mysticMarkBonus">10%</label>
+                            </div>
+                            <img src="/static/images/icons/3461.webp" alt="Mystic Mark + (II)" style="margin-left: 20px;">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="mysticMarkBonusII">
+                                <label class="custom-control-label" for="mysticMarkBonusII">9% (II)</label>
                             </div>
                         </div>
-						<div class="form-group">
-                            <img src="/static/images/icons/6389.webp" alt="Annihilation + (II)">
-                            <select id="annihilationBonus" class="form-select">
+                        <div class="form-group">
+                            <img src="/static/images/icons/3022.webp" alt="Redemption +">
+                            <select id="redemptionBonus" class="form-select">
                                 <option value="0">0%</option>
                                 <option value="3">3%</option>
                                 <option value="6">6%</option>
                                 <option value="9">9%</option>
-                            </select>(II)
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <img src="/static/images/icons/2522.webp" alt="Healing Touch + (I)">
+                            <select id="healingTouchBonus" class="form-select">
+                                <option value="0">0%</option>
+                                <option value="2.5">2.5%</option>
+                                <option value="5">5%</option>
+                                <option value="7.5">7.5%</option>
+                            </select>(I)
+                        </div>
+                        <div class="form-group d-flex align-items-center">
+                            <img src="/static/images/icons/3004.webp" alt="Payback +">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="paybackBonus">
+                                <label class="custom-control-label" for="paybackBonus">10% (II)</label>
+                            </div>
+                        </div>
+                        <div class="form-group d-flex align-items-center">
+                            <img src="/static/images/icons/5326.webp" alt="Punishment of the Light + (III)">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="punishOfLightBonus">
+                                <label class="custom-control-label" for="punishOfLightBonus">8% (III)</label>
+                            </div>
                         </div>
                     </div>
 
@@ -198,14 +200,26 @@
                         <h2>Enemy stats</h2>
                         <div class="form-group">
                             <div class="input-group">
-                                <img src="/static/images/icons/542.webp" class="img-fluid" alt="icon">
-                                <input type="number" class="form-control" id="targetPhysicalDefence">
+                                <img src="/static/images/icons/896.webp" class="img-fluid" alt="icon">
+                                <input type="number" class="form-control" id="targetMagicalDefence">
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="input-group">
                                 <img src="/static/images/icons/552.webp" class="img-fluid" alt="icon">
                                 <input type="number" class="form-control" id="targetResilience" step="any">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <img src="/static/images/icons/89.webp" class="img-fluid" alt="icon">
+                                <input type="number" class="form-control" id="targetMaxHealth" step="any" placeholder="Max health">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <img src="/static/images/icons/89.webp" class="img-fluid" alt="icon">
+                                <input type="number" class="form-control" id="targetCurrentHealth" step="any" placeholder="Current health">
                             </div>
                         </div>
                         <div class="form-group">
@@ -235,73 +249,89 @@
                 </tr>
             </thead>
             <tbody>
-                <tr id="eviscerationRow">
-                    <td style="display: flex; align-items: center;">
-                        <div style="display: inline-block;">
-                            <img src="/static/images/reaper/evisceration.png" alt="Evisceration">
-                        </div>
-                    </td>
+                <tr id="haradsTearsRow">
+                    <td><img src="/static/images/priest/haradstears.png" alt="Harads Tears"></td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                 </tr>
-                <tr id="otherworldBoostRow">
-                    <td><img src="/static/images/reaper/otherworldboost.png" alt="Otherworld Boost"></td>
+                <tr id="wordOfPowerRow">
+                    <td><img src="/static/images/priest/wordofpower.png" alt="Word of Power"></td>
                     <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-					<td>0</td>
-                </tr>
-                <tr id="annihilationRow">
-                    <td><img src="/static/images/reaper/annihilation.png" alt="Annihilation"></td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                 </tr>
-				<tr id="annihilationCritRow">
-                    <td><img src="/static/images/reaper/annihilation.png" alt="Annihilation">(Crit)</td>
+                <tr id="holyShieldRow">
+                    <td><img src="/static/images/priest/holyshield.png" alt="Holy Shield"></td>
                     <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                </tr>
-                <tr id="widescopeRow">
-                    <td><img src="/static/images/reaper/widescope.png" alt="Wide Scope"></td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                 </tr>
-                <tr id="widescopeCritRow">
-                    <td><img src="/static/images/reaper/widescope.png" alt="Wide Scope">(Crit)</td>
+                <tr id="healingTouchRow">
+                    <td><img src="/static/images/priest/healingtouch.png" alt="Healing Touch"></td>
                     <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                </tr>
-                <tr id="underworldHandRow">
-                    <td><img src="/static/images/reaper/underworldhand.png" alt="Hand of the Underworld">(1 hit)</td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                 </tr>
-                <tr id="explosionOfChaosRow">
-                    <td><img src="/static/images/reaper/explosionofchaos.png" alt="Explosion of Chaos"></td>
+                <tr id="elusiveThreatRow">
+                    <td><img src="/static/images/priest/elusivethreat.png" alt="Elusive Threat"></td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                 </tr>
-                <tr id="explosionOfChaosDemonRow">
-                    <td><img src="/static/images/reaper/explosionofchaos.png" alt="Explosion of Chaos">(Demon)</td>
+                <tr id="paybackRow">
+                    <td><img src="/static/images/priest/payback.png" alt="Payback"></td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
+                    <td>0</td>
+                </tr>
+                <tr id="redemptionRow">
+                    <td><img src="/static/images/priest/redemption.png" alt="Redemption"></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+                <tr id="mysticMarkRow">
+                    <td><img src="/static/images/priest/mysticmark.png" alt="Mystic Mark"></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+                <tr id="aegisOfSinRow">
+                    <td><img src="/static/images/priest/aegisofsin.png" alt="Aegis of Sin"></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+                <tr id="punishOfLightRow">
+                    <td><img src="/static/images/priest/punishoflight.png" alt="Punishment of the Light"></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+                <tr id="punishOfLightMassRow">
+                    <td><img src="/static/images/priest/punishoflight.png" alt="Punishment of the Light">(Mass)</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+                <tr id="punishOfPainRow">
+                    <td><img src="/static/images/priest/punishofpain.png" alt="Punishment of the Pain"></td>
                     <td>0</td>
                 </tr>
             </tbody>
@@ -312,6 +342,6 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script src="/static/js/reaper.js"></script>
+    <script src="/static/js/priest.js"></script>
 </body>
 </html>

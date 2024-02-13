@@ -32,8 +32,8 @@
                         <h2>Your stats</h2>
                         <div class="form-group">
                             <div class="input-group">
-                                <img src="/static/images/icons/95.webp" class="img-fluid" alt="icon">
-                                <input type="number" class="form-control" id="physdmg" step="any">
+                                <img src="/static/images/icons/897.webp" class="img-fluid" alt="icon">
+                                <input type="number" class="form-control" id="magicdmg" step="any">
                             </div>
                         </div>
                         <div class="form-group">
@@ -54,16 +54,10 @@
                                 <input type="number" class="form-control" id="health" step="any">
                             </div>
                         </div>
-						<div class="form-group">
+                        <div class="form-group">
                             <div class="input-group">
                                 <img src="/static/images/icons/3828.webp" class="img-fluid" alt="icon">
                                 <input type="number" class="form-control" id="critBoost" step="any">
-                            </div>
-                        </div>
-						<div class="form-group">
-                            <div class="input-group">
-                                <img src="/static/images/reaper/rage.png" class="img-fluid" alt="icon">
-                                <input type="number" class="form-control" id="rage" min="0" max="16">
                             </div>
                         </div>
                         <div class="form-group d-flex align-items-center">
@@ -154,43 +148,92 @@
                             </select>
                         </div>
                         <div class="form-group d-flex align-items-center">
-                            <img src="/static/images/icons/6378.webp" alt="Evisceration +">
-                            <div class="custom-control custom-switch">
-                                <input type="checkbox" class="custom-control-input" id="eviscerationBonus">
-                                <label class="custom-control-label" for="eviscerationBonus">5%</label>
-                            </div>
-                            <img src="/static/images/icons/6378.webp" alt="Evisceration + (I/II)" style="margin-left: 35px;">
-                            <select id="eviscerationBonusII" class="form-select">
-                                <option value="0">0%</option>
-                                <option value="2.5">2.5%</option>
-                                <option value="5">5%</option>
-                                <option value="7.5">7.5%</option>
-                            </select>(I/II)
-                        </div>
-                        <div class="form-group">
-                            <img src="/static/images/icons/6392.webp" alt="Explodion of Chaos +">
-                            <select id="explodionBonus" class="form-select">
-                                <option value="0">0%</option>
-                                <option value="2">2%</option>
-                                <option value="4">4%</option>
-                                <option value="6">6%</option>
-                            </select>
+                            <img src="/static/images/icons/6251.webp" alt="Excess Energy">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="excessEnergyBonus">
+                                    <label class="custom-control-label" for="excessEnergyBonus">12%</label>
+                                </div>
                         </div>
                         <div class="form-group d-flex align-items-center">
-                            <img src="/static/images/icons/6393.webp" alt="Devastating Flash">
+                            <img src="/static/images/icons/2520.webp" alt="Fire Ball +">
                             <div class="custom-control custom-switch">
-                                <input type="checkbox" class="custom-control-input" id="devastatingFlashBonus">
-                                <label class="custom-control-label" for="devastatingFlashBonus">15%</label>
+                                <input type="checkbox" class="custom-control-input" id="fireBallBonus">
+                                <label class="custom-control-label" for="fireBallBonus">5%</label>
                             </div>
-                        </div>
-						<div class="form-group">
-                            <img src="/static/images/icons/6389.webp" alt="Annihilation + (II)">
-                            <select id="annihilationBonus" class="form-select">
+                            <img src="/static/images/icons/2520.webp" alt="Fire Ball + (I/III)" style="margin-left: 36px;">
+                            <select id="fireBallBonusI" class="form-select">
                                 <option value="0">0%</option>
                                 <option value="3">3%</option>
                                 <option value="6">6%</option>
                                 <option value="9">9%</option>
+                            </select>(I/III)
+                        </div>
+                        <div class="form-group">
+                            <img src="/static/images/icons/3093.webp" alt="Overload +">
+                            <select id="overloadBonus" class="form-select">
+                                <option value="0">0%</option>
+                                <option value="1">1%</option>
+                                <option value="2">2%</option>
+                                <option value="3">3%</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <img src="/static/images/icons/4498.webp" alt="Aura of Fire + (I)">
+                            <select id="auraOfFireBonus" class="form-select">
+                                <option value="0">0%</option>
+                                <option value="1">1%</option>
+                                <option value="2">2%</option>
+                                <option value="3">3%</option>
+                            </select>(I)
+                        </div>
+                        <div class="form-group d-flex align-items-center">
+                            <img src="/static/images/icons/2841.webp" alt="Blazing Ground + (I)">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="blazingGroundBonus">
+                                <label class="custom-control-label" for="blazingGroundBonus">2% (I)</label>
+                            </div>
+                        </div>
+                        <div class="form-group d-flex align-items-center">
+                            <img src="/static/images/icons/6932.webp" alt="Pyromaniac (I)">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="isPyromaniac">
+                                <label class="custom-control-label" for="isPyromaniac">(I)</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <img src="/static/images/icons/2541.webp" alt="Time Warp + (II)">
+                            <select id="timeWarpBonus" class="form-select">
+                                <option value="0">0%</option>
+                                <option value="2.5">2.5%</option>
+                                <option value="5">5%</option>
+                                <option value="7.5">7.5%</option>
                             </select>(II)
+                        </div>
+                        <div class="form-group d-flex align-items-center">
+                            <img src="/static/images/icons/2532.webp" alt="Shattered Stone + (III)">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="shatteredStoneBonus">
+                                <label class="custom-control-label" for="shatteredStoneBonus">7% (III)</label>
+                            </div>
+                        </div>
+                        <div class="form-group d-flex align-items-center">
+                            <img src="/static/images/icons/3018.webp" alt="Frostbolt + (III)">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="frostboltBonus">
+                                <label class="custom-control-label" for="frostboltBonus">5% (III)</label>
+                            </div>
+                            <img src="/static/images/icons/6917.webp" alt="Magma Boulder (I)" style="margin-left: 5px;">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="magmaBoulderBonus">
+                                <label class="custom-control-label" for="magmaBoulderBonus">15% (I)</label>
+                            </div>
+                        </div>
+                        <div class="form-group d-flex align-items-center">
+                            <img src="/static/images/icons/6934.webp" alt="Nature’s Magic (III)">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="natureBonus">
+                                <label class="custom-control-label" for="natureBonus">10% Rose (III)</label>
+                            </div>
                         </div>
                     </div>
 
@@ -198,8 +241,8 @@
                         <h2>Enemy stats</h2>
                         <div class="form-group">
                             <div class="input-group">
-                                <img src="/static/images/icons/542.webp" class="img-fluid" alt="icon">
-                                <input type="number" class="form-control" id="targetPhysicalDefence">
+                                <img src="/static/images/icons/896.webp" class="img-fluid" alt="icon">
+                                <input type="number" class="form-control" id="targetMagicalDefence">
                             </div>
                         </div>
                         <div class="form-group">
@@ -235,70 +278,67 @@
                 </tr>
             </thead>
             <tbody>
-                <tr id="eviscerationRow">
-                    <td style="display: flex; align-items: center;">
-                        <div style="display: inline-block;">
-                            <img src="/static/images/reaper/evisceration.png" alt="Evisceration">
-                        </div>
-                    </td>
+                <tr id="fireBallRow">
+                    <td><img src="/static/images/mage/fireball.png" alt="Fire Ball"></td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                 </tr>
-                <tr id="otherworldBoostRow">
-                    <td><img src="/static/images/reaper/otherworldboost.png" alt="Otherworld Boost"></td>
+                <tr id="tiweWarpRow">
+                    <td><img src="/static/images/mage/timewarp.png" alt="Time Warp"></td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
 					<td>0</td>
                 </tr>
-                <tr id="annihilationRow">
-                    <td><img src="/static/images/reaper/annihilation.png" alt="Annihilation"></td>
+				<tr id="shatteredStoneRow">
+                    <td><img src="/static/images/mage/shatteredstone.png" alt="Shattered Stone"></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+					<td>0</td>
+                </tr>
+                <tr id="blazingGroundRow">
+                    <td><img src="/static/images/mage/blazingground.png" alt="Blazing Ground"></td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                 </tr>
-				<tr id="annihilationCritRow">
-                    <td><img src="/static/images/reaper/annihilation.png" alt="Annihilation">(Crit)</td>
+                <tr id="frostboltRow">
+                    <td><img src="/static/images/mage/frostbolt.png" alt="Frostbolt"></td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                 </tr>
-                <tr id="widescopeRow">
-                    <td><img src="/static/images/reaper/widescope.png" alt="Wide Scope"></td>
+                <tr id="overloadRow">
+                    <td><img src="/static/images/mage/overload.png" alt="Overload"></td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                 </tr>
-                <tr id="widescopeCritRow">
-                    <td><img src="/static/images/reaper/widescope.png" alt="Wide Scope">(Crit)</td>
+                <tr id="sheafOfLightningRow">
+                    <td><img src="/static/images/mage/sheafoflightning.png" alt="Sheaf of Lightning"></td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                 </tr>
-                <tr id="underworldHandRow">
-                    <td><img src="/static/images/reaper/underworldhand.png" alt="Hand of the Underworld">(1 hit)</td>
+                <tr id="roaringFlameRow">
+                    <td><img src="/static/images/mage/roaringflame.png" alt="Roaring Flame"></td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                 </tr>
-                <tr id="explosionOfChaosRow">
-                    <td><img src="/static/images/reaper/explosionofchaos.png" alt="Explosion of Chaos"></td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                </tr>
-                <tr id="explosionOfChaosDemonRow">
-                    <td><img src="/static/images/reaper/explosionofchaos.png" alt="Explosion of Chaos">(Demon)</td>
+                <tr id="auraOfFireRow">
+                    <td><img src="/static/images/mage/auraoffire.png" alt="Aura of Fire"></td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
@@ -312,6 +352,6 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script src="/static/js/reaper.js"></script>
+    <script src="/static/js/mage.js"></script>
 </body>
 </html>

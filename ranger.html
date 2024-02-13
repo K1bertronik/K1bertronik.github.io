@@ -54,18 +54,6 @@
                                 <input type="number" class="form-control" id="health" step="any">
                             </div>
                         </div>
-						<div class="form-group">
-                            <div class="input-group">
-                                <img src="/static/images/icons/3828.webp" class="img-fluid" alt="icon">
-                                <input type="number" class="form-control" id="critBoost" step="any">
-                            </div>
-                        </div>
-						<div class="form-group">
-                            <div class="input-group">
-                                <img src="/static/images/reaper/rage.png" class="img-fluid" alt="icon">
-                                <input type="number" class="form-control" id="rage" min="0" max="16">
-                            </div>
-                        </div>
                         <div class="form-group d-flex align-items-center">
                             <img src="/static/images/icons/4064.webp" alt="Castle attack">
                             <select id="castleDmg" class="form-select">
@@ -153,44 +141,85 @@
                                 <option value="2">2%</option>
                             </select>
                         </div>
-                        <div class="form-group d-flex align-items-center">
-                            <img src="/static/images/icons/6378.webp" alt="Evisceration +">
-                            <div class="custom-control custom-switch">
-                                <input type="checkbox" class="custom-control-input" id="eviscerationBonus">
-                                <label class="custom-control-label" for="eviscerationBonus">5%</label>
-                            </div>
-                            <img src="/static/images/icons/6378.webp" alt="Evisceration + (I/II)" style="margin-left: 35px;">
-                            <select id="eviscerationBonusII" class="form-select">
+                        <div class="form-group">
+                            <img src="/static/images/icons/1871.webp" alt="Rangers Blessing +">
+                            <select id="blessingBonus" class="form-select">
                                 <option value="0">0%</option>
-                                <option value="2.5">2.5%</option>
-                                <option value="5">5%</option>
-                                <option value="7.5">7.5%</option>
-                            </select>(I/II)
+                                <option value="1.5">1.5%</option>
+                                <option value="3">3%</option>
+                                <option value="4.5">4.5%</option>
+                            </select>
+                        </div>
+                        <div class="form-group d-flex align-items-center">
+                            <img src="/static/images/icons/6865.webp" alt="Flexible Bowstring">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="isflexibleBowstring">
+                                <label class="custom-control-label" for="isflexibleBowstring">-70%</label>
+                            </div>
+                            <div class="input-group">
+                                <img src="/static/images/icons/4359.webp" class="img-fluid" alt="icon" style="margin-left: 20px;">
+                                <input type="number" class="form-control" id="attackStrength" step="any">
+                            </div>
                         </div>
                         <div class="form-group">
-                            <img src="/static/images/icons/6392.webp" alt="Explodion of Chaos +">
-                            <select id="explodionBonus" class="form-select">
+                            <img src="/static/images/icons/2840.webp" alt="Fire Arrows +">
+                            <select id="fireArrowsDotBonus" class="form-select">
+                                <option value="0">0%</option>
+                                <option value="1">1%</option>
+                                <option value="2">2%</option>
+                                <option value="3">3%</option>
+                            </select>
+                        </div>
+                        <div class="form-group d-flex align-items-center">
+                            <img src="/static/images/icons/3009.webp" alt="Hail of Arrows + (II)">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="hailOfArrowsBonus">
+                                <label class="custom-control-label" for="hailOfArrowsBonus">7.5% (II)</label>
+                            </div>
+                        </div>
+                        <div class="form-group d-flex align-items-center">
+                            <img src="/static/images/icons/6239.webp" alt="Fire Volley">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="isFireVoley">
+                                <label class="custom-control-label" for="isFireVoley">(II)</label>
+                            </div>
+                            <div class="input-group">
+                                <input type="number" class="form-control" id="rangeOfHail" min="0" max="6" placeholder="Distance (1-6)">
+                            </div>
+                        </div>
+                        <div class="form-group d-flex align-items-center">
+                            <img src="/static/images/icons/481.webp" alt="Powerful Shot + (II)">
+                            <select id="powerfulShotBonus" class="form-select">
                                 <option value="0">0%</option>
                                 <option value="2">2%</option>
                                 <option value="4">4%</option>
                                 <option value="6">6%</option>
-                            </select>
-                        </div>
-                        <div class="form-group d-flex align-items-center">
-                            <img src="/static/images/icons/6393.webp" alt="Devastating Flash">
+                            </select>(II)
+                            <img src="/static/images/icons/6867.webp" alt="Bullseye" style="margin-left: 8px;">
                             <div class="custom-control custom-switch">
-                                <input type="checkbox" class="custom-control-input" id="devastatingFlashBonus">
-                                <label class="custom-control-label" for="devastatingFlashBonus">15%</label>
+                                <input type="checkbox" class="custom-control-input" id="isBullseye">
+                                <label class="custom-control-label" for="isBullseye">(II)</label>
                             </div>
                         </div>
-						<div class="form-group">
-                            <img src="/static/images/icons/6389.webp" alt="Annihilation + (II)">
-                            <select id="annihilationBonus" class="form-select">
+                        <div class="form-group">
+                            <img src="/static/images/icons/5321.webp" alt="Vengeful Shot + (II)">
+                            <select id="vengefulshotBonus" class="form-select">
                                 <option value="0">0%</option>
+                                <option value="1">1%</option>
+                                <option value="2">2%</option>
                                 <option value="3">3%</option>
-                                <option value="6">6%</option>
-                                <option value="9">9%</option>
                             </select>(II)
+                        </div>
+                        <div class="form-group d-flex align-items-center">
+                            <img src="/static/images/icons/6884.webp" alt="Heavy Artillery">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="isHeavyArtillery">
+                                <label class="custom-control-label" for="isHeavyArtillery">>30%</label>
+                            </div>
+                            <div class="input-group">
+                                <img src="/static/images/icons/553.webp" class="img-fluid" alt="icon" style="margin-left: 15px;">
+                                <input type="number" class="form-control" id="attackSpeed" step="any" min="0" max="30">
+                            </div>
                         </div>
                     </div>
 
@@ -206,6 +235,18 @@
                             <div class="input-group">
                                 <img src="/static/images/icons/552.webp" class="img-fluid" alt="icon">
                                 <input type="number" class="form-control" id="targetResilience" step="any">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <img src="/static/images/icons/89.webp" class="img-fluid" alt="icon">
+                                <input type="number" class="form-control" id="targetMaxHealth" step="any" placeholder="Max health">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <img src="/static/images/icons/89.webp" class="img-fluid" alt="icon">
+                                <input type="number" class="form-control" id="targetCurrentHealth" step="any" placeholder="Current health">
                             </div>
                         </div>
                         <div class="form-group">
@@ -235,10 +276,10 @@
                 </tr>
             </thead>
             <tbody>
-                <tr id="eviscerationRow">
+                <tr id="powerfulShotRow">
                     <td style="display: flex; align-items: center;">
                         <div style="display: inline-block;">
-                            <img src="/static/images/reaper/evisceration.png" alt="Evisceration">
+                            <img src="/static/images/ranger/powerfulshot.png" alt="Powerful Shot">
                         </div>
                     </td>
                     <td>0</td>
@@ -247,61 +288,72 @@
                     <td>0</td>
                     <td>0</td>
                 </tr>
-                <tr id="otherworldBoostRow">
-                    <td><img src="/static/images/reaper/otherworldboost.png" alt="Otherworld Boost"></td>
+                <tr id="blessingRow">
+                    <td><img src="/static/images/ranger/blessing.png" alt="Rangers Blessing"></td>
                     <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-					<td>0</td>
-                </tr>
-                <tr id="annihilationRow">
-                    <td><img src="/static/images/reaper/annihilation.png" alt="Annihilation"></td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                 </tr>
-				<tr id="annihilationCritRow">
-                    <td><img src="/static/images/reaper/annihilation.png" alt="Annihilation">(Crit)</td>
+                <tr id="fireArrowsRow">
+                    <td><img src="/static/images/ranger/firearrows.png" alt="Fire Arrows"></td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                 </tr>
-                <tr id="widescopeRow">
-                    <td><img src="/static/images/reaper/widescope.png" alt="Wide Scope"></td>
+                <tr id="fireArrowsDotRow">
+                    <td><img src="/static/images/ranger/firearrows.png" alt="Fire Arrows">(Dot)</td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                 </tr>
-                <tr id="widescopeCritRow">
-                    <td><img src="/static/images/reaper/widescope.png" alt="Wide Scope">(Crit)</td>
+                <tr id="explosiveTrapRow">
+                    <td><img src="/static/images/ranger/explosivetrap.png" alt="Explosive Trap"></td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                 </tr>
-                <tr id="underworldHandRow">
-                    <td><img src="/static/images/reaper/underworldhand.png" alt="Hand of the Underworld">(1 hit)</td>
+                <tr id="hailOfArrowsRow">
+                    <td><img src="/static/images/ranger/hailofarrows.png" alt="Hail of Arrows"></td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                 </tr>
-                <tr id="explosionOfChaosRow">
-                    <td><img src="/static/images/reaper/explosionofchaos.png" alt="Explosion of Chaos"></td>
+                <tr id="hailOfArrowsMassRow">
+                    <td><img src="/static/images/ranger/hailofarrows.png" alt="Hail of Arrows">(Mass)</td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                 </tr>
-                <tr id="explosionOfChaosDemonRow">
-                    <td><img src="/static/images/reaper/explosionofchaos.png" alt="Explosion of Chaos">(Demon)</td>
+                <tr id="bowStrikeRow">
+                    <td><img src="/static/images/ranger/bowstrike.png" alt="Bow Strike"></td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
+                    <td>0</td>
+                </tr>
+                <tr id="vengefulShotRow">
+                    <td><img src="/static/images/ranger/vengefulshot.png" alt="Vengeful Shot"></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+                <tr id="vengefulShotDotRow">
+                    <td><img src="/static/images/ranger/vengefulshot.png" alt="Vengeful Shot">(Dot)</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+                <tr id="increasedDangerRow">
+                    <td><img src="/static/images/ranger/increaseddanger.png" alt="Increased Danger"></td>
                     <td>0</td>
                 </tr>
             </tbody>
@@ -312,6 +364,6 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script src="/static/js/reaper.js"></script>
+    <script src="/static/js/ranger.js"></script>
 </body>
 </html>

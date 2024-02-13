@@ -38,6 +38,12 @@
                         </div>
                         <div class="form-group">
                             <div class="input-group">
+                                <img src="/static/images/icons/897.webp" class="img-fluid" alt="icon">
+                                <input type="number" class="form-control" id="magicdmg" step="any">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
                                 <img src="/static/images/icons/556.webp" class="img-fluid" alt="icon">
                                 <input type="number" class="form-control" id="penetration" step="any">
                             </div>
@@ -54,17 +60,39 @@
                                 <input type="number" class="form-control" id="health" step="any">
                             </div>
                         </div>
-						<div class="form-group">
+                        <div class="form-group">
                             <div class="input-group">
-                                <img src="/static/images/icons/3828.webp" class="img-fluid" alt="icon">
-                                <input type="number" class="form-control" id="critBoost" step="any">
+                                <img src="/static/images/icons/6446.webp" class="img-fluid" alt="icon">
+                                <input type="number" class="form-control" id="bestialRampageDamage" step="any" placeholder="Damage caused">
                             </div>
                         </div>
-						<div class="form-group">
-                            <div class="input-group">
-                                <img src="/static/images/reaper/rage.png" class="img-fluid" alt="icon">
-                                <input type="number" class="form-control" id="rage" min="0" max="16">
-                            </div>
+                        <div class="form-group d-flex align-items-center">
+                            <img src="/static/images/icons/6473.webp" alt="Beast Awakening">
+                            <select id="beastLevel" class="form-select">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                            <img src="/static/images/icons/6406.webp" alt="Moon Touch">
+                            <select id="moonTouchBoost" class="form-select">
+                                <option value="0">0%</option>
+                                <option value="5">5%</option>
+                                <option value="7">7%</option>
+                                <option value="10">10%</option>
+                                <option value="13">13%</option>
+                                <option value="15">15%</option>
+                            </select>
+                            <img src="/static/images/icons/6407.webp" alt="Order to Attack">
+                            <select id="orderToAttackBonus" class="form-select">
+                                <option value="0">0%</option>
+                                <option value="5">5%</option>
+                                <option value="10">10%</option>
+                                <option value="15">15%</option>
+                                <option value="20">20%</option>
+                                <option value="25">25%</option>
+                            </select>
                         </div>
                         <div class="form-group d-flex align-items-center">
                             <img src="/static/images/icons/4064.webp" alt="Castle attack">
@@ -154,43 +182,104 @@
                             </select>
                         </div>
                         <div class="form-group d-flex align-items-center">
-                            <img src="/static/images/icons/6378.webp" alt="Evisceration +">
+                            <img src="/static/images/icons/6406.webp" alt="Moon Touch +">
                             <div class="custom-control custom-switch">
-                                <input type="checkbox" class="custom-control-input" id="eviscerationBonus">
-                                <label class="custom-control-label" for="eviscerationBonus">5%</label>
+                                <input type="checkbox" class="custom-control-input" id="moonTouchBonus">
+                                <label class="custom-control-label" for="moonTouchBonus">5%</label>
                             </div>
-                            <img src="/static/images/icons/6378.webp" alt="Evisceration + (I/II)" style="margin-left: 35px;">
-                            <select id="eviscerationBonusII" class="form-select">
-                                <option value="0">0%</option>
-                                <option value="2.5">2.5%</option>
-                                <option value="5">5%</option>
-                                <option value="7.5">7.5%</option>
-                            </select>(I/II)
-                        </div>
-                        <div class="form-group">
-                            <img src="/static/images/icons/6392.webp" alt="Explodion of Chaos +">
-                            <select id="explodionBonus" class="form-select">
-                                <option value="0">0%</option>
-                                <option value="2">2%</option>
-                                <option value="4">4%</option>
-                                <option value="6">6%</option>
-                            </select>
                         </div>
                         <div class="form-group d-flex align-items-center">
-                            <img src="/static/images/icons/6393.webp" alt="Devastating Flash">
+                            <img src="/static/images/icons/6459.webp" alt="Proximity to Nature +">
+                            <select id="proximityBonus" class="form-select">
+                                <option value="0">0%</option>
+                                <option value="1">1%</option>
+                                <option value="1.5">1.5%</option>
+                                <option value="2">2%</option>
+                            </select>
+                            <img src="/static/images/icons/6459.webp" alt="Proximity to Nature + (III)" style="margin-left: 8px;">
                             <div class="custom-control custom-switch">
-                                <input type="checkbox" class="custom-control-input" id="devastatingFlashBonus">
-                                <label class="custom-control-label" for="devastatingFlashBonus">15%</label>
+                                <input type="checkbox" class="custom-control-input" id="proximityBonusIII">
+                                <label class="custom-control-label" for="proximityBonusIII">2% (III)</label>
                             </div>
                         </div>
-						<div class="form-group">
-                            <img src="/static/images/icons/6389.webp" alt="Annihilation + (II)">
-                            <select id="annihilationBonus" class="form-select">
+                        <div class="form-group">
+                            <img src="/static/images/icons/6407.webp" alt="Order to Attack + (I/II)">
+                            <select id="orderBonus" class="form-select">
                                 <option value="0">0%</option>
+                                <option value="1">1%</option>
+                                <option value="2">2%</option>
                                 <option value="3">3%</option>
-                                <option value="6">6%</option>
-                                <option value="9">9%</option>
+                            </select>(I/II)
+                        </div>
+                        <div class="form-group d-flex align-items-center">
+                            <img src="/static/images/icons/6408.webp" alt="Healing + (I)">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="healingBonusI">
+                                <label class="custom-control-label" for="healingBonusI">3% (I)</label>
+                            </div>
+                            <img src="/static/images/icons/6408.webp" alt="Healing + (III)" style="margin-left: 15px;">
+                            <select id="healingBonusIII" class="form-select">
+                                <option value="0">0%</option>
+                                <option value="1">1%</option>
+                                <option value="2">2%</option>
+                                <option value="3">3%</option>
+                            </select>(III)
+                        </div>
+                        <div class="form-group d-flex align-items-center">
+                            <img src="/static/images/icons/6877.webp" alt="Sabertooth (I)">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="isSabertooth">
+                                <label class="custom-control-label" for="isSabertooth">-40% (I)</label>
+                            </div>
+                        </div>
+                        <div class="form-group d-flex align-items-center">
+                            <img src="/static/images/icons/6473.webp" alt="Beast Awakening + (II)">
+                            <select id="beastBonusII" class="form-select">
+                                <option value="0">0%</option>
+                                <option value="1.5">1.5%</option>
+                                <option value="3">3%</option>
+                                <option value="4.5">4.5%</option>
                             </select>(II)
+                            <img src="/static/images/icons/6473.webp" alt="Beast Awakening + (III)" style="margin-left: 8px;">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="beastBonusIII">
+                                <label class="custom-control-label" for="beastBonusIII">3% (III)</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <img src="/static/images/icons/6452.webp" alt="Moonlight + (III)">
+                            <select id="moonlightBonus" class="form-select">
+                                <option value="0">0%</option>
+                                <option value="3">9%</option>
+                                <option value="6">6%</option>
+                                <option value="9">3%</option>
+                            </select>(III)
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <img src="/static/images/icons/6453.webp" class="img-fluid" alt="Aura of the Forest">
+                                <input type="number" class="form-control" id="auraOfForestBoost" step="any" min="0" max="20" placeholder="Boost 0-20%">
+                            </div>
+                        </div>
+                        <div class="form-group d-flex align-items-center">
+                            <img src="/static/images/icons/6454.webp" alt="Power of Nature">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="powerOfNatureBonus">
+                                <label class="custom-control-label" for="powerOfNatureBonus">15%</label>
+                            </div>
+                        </div>
+                        <div class="form-group d-flex align-items-center">
+                            <img src="/static/images/icons/6881.webp" alt="Grandeur of the Lotus (III)">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="grandeurBonus">
+                                <label class="custom-control-label" for="grandeurBonus">-20% (III)</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <img src="/static/images/icons/6897.webp" class="img-fluid" alt="Art of Healing">
+                                <input type="number" class="form-control" id="artOfHealingBonus" step="any" min="0" max="30" placeholder="Heal 0-30%">
+                            </div>
                         </div>
                     </div>
 
@@ -204,15 +293,21 @@
                         </div>
                         <div class="form-group">
                             <div class="input-group">
+                                <img src="/static/images/icons/896.webp" class="img-fluid" alt="icon">
+                                <input type="number" class="form-control" id="targetMagicalDefence">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
                                 <img src="/static/images/icons/552.webp" class="img-fluid" alt="icon">
                                 <input type="number" class="form-control" id="targetResilience" step="any">
                             </div>
                         </div>
                         <div class="form-group">
-                        <div class="custom-control custom-switch">
-                            <input type="checkbox" class="custom-control-input" id="pvpSwitch">
-                            <label class="custom-control-label" for="pvpSwitch">PVE/PVP</label>
-                        </div>
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="pvpSwitch">
+                                <label class="custom-control-label" for="pvpSwitch">PVE/PVP</label>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -235,70 +330,109 @@
                 </tr>
             </thead>
             <tbody>
-                <tr id="eviscerationRow">
-                    <td style="display: flex; align-items: center;">
-                        <div style="display: inline-block;">
-                            <img src="/static/images/reaper/evisceration.png" alt="Evisceration">
-                        </div>
-                    </td>
+                <tr id="beastAwakeHealthRow">
+                    <td><img src="/static/images/beastmaster/beastawake.png" alt="Beast Awakening">(Health)</td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                 </tr>
-                <tr id="otherworldBoostRow">
-                    <td><img src="/static/images/reaper/otherworldboost.png" alt="Otherworld Boost"></td>
+                <tr id="beastAwakeDamageRow">
+                    <td><img src="/static/images/beastmaster/beastawake.png" alt="Beast Awakening">(Damage)</td>
                     <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-					<td>0</td>
-                </tr>
-                <tr id="annihilationRow">
-                    <td><img src="/static/images/reaper/annihilation.png" alt="Annihilation"></td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                 </tr>
-				<tr id="annihilationCritRow">
-                    <td><img src="/static/images/reaper/annihilation.png" alt="Annihilation">(Crit)</td>
+            </tbody>
+        </table>
+        </div>
+
+        <div class="container mt-5">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th style="width: 130px;">Skill</th>
+                    <th>Level 1</th>
+                    <th>Level 2</th>
+                    <th>Level 3</th>
+                    <th>Level 4</th>
+                    <th>Level 5</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr id="moonTouchRow">
+                    <td><img src="/static/images/beastmaster/moontouch.png" alt="Moon Touch"></td>
+                    <td>0</td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                 </tr>
-                <tr id="widescopeRow">
-                    <td><img src="/static/images/reaper/widescope.png" alt="Wide Scope"></td>
+                <tr id="healingHealthMoonRow">
+                    <td><img src="/static/images/beastmaster/healing.png" alt="Healing">(Moon HP)</td>
                     <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                </tr>
-                <tr id="widescopeCritRow">
-                    <td><img src="/static/images/reaper/widescope.png" alt="Wide Scope">(Crit)</td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                 </tr>
-                <tr id="underworldHandRow">
-                    <td><img src="/static/images/reaper/underworldhand.png" alt="Hand of the Underworld">(1 hit)</td>
+                <tr id="healingHealthRow">
+                    <td><img src="/static/images/beastmaster/healing.png" alt="Healing">(Your HP)</td>
                     <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                </tr>
-                <tr id="explosionOfChaosRow">
-                    <td><img src="/static/images/reaper/explosionofchaos.png" alt="Explosion of Chaos"></td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                 </tr>
-                <tr id="explosionOfChaosDemonRow">
-                    <td><img src="/static/images/reaper/explosionofchaos.png" alt="Explosion of Chaos">(Demon)</td>
+                <tr id="healingRow">
+                    <td><img src="/static/images/beastmaster/healing.png" alt="Healing"></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+                <tr id="chainLightningRow">
+                    <td><img src="/static/images/beastmaster/chainlightning.png" alt="Chain Lightning"></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+                <tr id="bestialRampageRow">
+                    <td><img src="/static/images/beastmaster/bestialrampage.png" alt="Bestial Rampage"></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+                <tr id="soulConnectionRow">
+                    <td><img src="/static/images/beastmaster/soulconnection.png" alt="Soul Connection"></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+                <tr id="moonlightRow">
+                    <td><img src="/static/images/beastmaster/moonlight.png" alt="Moonlight"></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+                <tr id="auraOfForestRow">
+                    <td><img src="/static/images/beastmaster/auraofforest.png" alt="Aura of the Forest"></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+                <tr id="proximityToNatureRow">
+                    <td><img src="/static/images/beastmaster/proximitytonature.png" alt="Proximity to Nature"></td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
@@ -312,6 +446,6 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script src="/static/js/reaper.js"></script>
+    <script src="/static/js/beastmaster.js"></script>
 </body>
 </html>

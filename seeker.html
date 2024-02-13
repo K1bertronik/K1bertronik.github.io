@@ -54,20 +54,22 @@
                                 <input type="number" class="form-control" id="health" step="any">
                             </div>
                         </div>
-						<div class="form-group">
+                        <div class="form-group">
                             <div class="input-group">
-                                <img src="/static/images/icons/3828.webp" class="img-fluid" alt="icon">
-                                <input type="number" class="form-control" id="critBoost" step="any">
-                            </div>
-                        </div>
-						<div class="form-group">
-                            <div class="input-group">
-                                <img src="/static/images/reaper/rage.png" class="img-fluid" alt="icon">
-                                <input type="number" class="form-control" id="rage" min="0" max="16">
+                                <img src="/static/images/icons/4359.webp" class="img-fluid" alt="icon">
+                                <input type="number" class="form-control" id="attackStrength" step="any">
                             </div>
                         </div>
                         <div class="form-group d-flex align-items-center">
-                            <img src="/static/images/icons/4064.webp" alt="Castle attack">
+                            <img src="/static/images/icons/3950.webp" alt="Attraction">
+                            <select id="attractionBonus" class="form-select">
+                                <option value="0">0%</option>
+                                <option value="6">6%</option>
+                                <option value="8">8%</option>
+                                <option value="10">10%</option>
+                                <option value="12">12%</option>
+                            </select>
+                            <img src="/static/images/icons/4064.webp" alt="Castle attack" style="margin-left: 8px;">
                             <select id="castleDmg" class="form-select">
                                 <option value="0">0%</option>
                                 <option value="5">5%</option>
@@ -154,43 +156,80 @@
                             </select>
                         </div>
                         <div class="form-group d-flex align-items-center">
-                            <img src="/static/images/icons/6378.webp" alt="Evisceration +">
+                            <img src="/static/images/icons/6254.webp" alt="Stupefying Pain">
                             <div class="custom-control custom-switch">
-                                <input type="checkbox" class="custom-control-input" id="eviscerationBonus">
-                                <label class="custom-control-label" for="eviscerationBonus">5%</label>
+                                <input type="checkbox" class="custom-control-input" id="stupefyingPainBonus">
+                                <label class="custom-control-label" for="stupefyingPainBonus">-50%</label>
                             </div>
-                            <img src="/static/images/icons/6378.webp" alt="Evisceration + (I/II)" style="margin-left: 35px;">
-                            <select id="eviscerationBonusII" class="form-select">
-                                <option value="0">0%</option>
-                                <option value="2.5">2.5%</option>
-                                <option value="5">5%</option>
-                                <option value="7.5">7.5%</option>
-                            </select>(I/II)
-                        </div>
-                        <div class="form-group">
-                            <img src="/static/images/icons/6392.webp" alt="Explodion of Chaos +">
-                            <select id="explodionBonus" class="form-select">
-                                <option value="0">0%</option>
-                                <option value="2">2%</option>
-                                <option value="4">4%</option>
-                                <option value="6">6%</option>
-                            </select>
                         </div>
                         <div class="form-group d-flex align-items-center">
-                            <img src="/static/images/icons/6393.webp" alt="Devastating Flash">
+                            <img src="/static/images/icons/6922.webp" alt="Steel Slicer (I)">
                             <div class="custom-control custom-switch">
-                                <input type="checkbox" class="custom-control-input" id="devastatingFlashBonus">
-                                <label class="custom-control-label" for="devastatingFlashBonus">15%</label>
+                                <input type="checkbox" class="custom-control-input" id="isSteelSlicer">
+                                <label class="custom-control-label" for="isSteelSlicer">15% (I)</label>
                             </div>
                         </div>
-						<div class="form-group">
-                            <img src="/static/images/icons/6389.webp" alt="Annihilation + (II)">
-                            <select id="annihilationBonus" class="form-select">
+                        <div class="form-group d-flex align-items-center">
+                            <img src="/static/images/icons/6935.webp" alt="Battle Potential (I)">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="battlePotentialBonus">
+                                <label class="custom-control-label" for="battlePotentialBonus">x2 (I)</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <img src="/static/images/icons/3966.webp" alt="Splitting Blow +">
+                            <select id="splittingBlowBonus" class="form-select">
+                                <option value="0">0%</option>
+                                <option value="1">1%</option>
+                                <option value="2">2%</option>
+                                <option value="3">3%</option>
+                            </select>
+                            <img src="/static/images/icons/3966.webp" alt="Splitting Blow + (II)">
+                            <select id="splittingBlowBonusII" class="form-select">
+                                <option value="0">0%</option>
+                                <option value="1">1%</option>
+                                <option value="2">2%</option>
+                                <option value="3">3%</option>
+                            </select>(II)
+                        </div>
+                        <div class="form-group">
+                            <img src="/static/images/icons/3957.webp" alt="Dangerous Blow + (II)">
+                            <select id="dangerousBlowBonus" class="form-select">
+                                <option value="0">0%</option>
+                                <option value="1.5">1.5%</option>
+                                <option value="3">3%</option>
+                                <option value="4.5">4.5%</option>
+                            </select>(II)
+                        </div>
+                        <div class="form-group d-flex align-items-center">
+                            <img src="/static/images/icons/4035.webp" alt="Bloodthirst + (II)">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="bloodthirstBonus">
+                                <label class="custom-control-label" for="bloodthirstBonus">9% (II)</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <img src="/static/images/icons/4035.webp" class="img-fluid" alt="Bloodthirst">
+                                <input type="number" class="form-control" id="bleedingCount" min="0" max="5" placeholder="Bleeding count">
+                            </div>
+                        </div>
+                        <div class="form-group d-flex align-items-center">
+                            <img src="/static/images/icons/6255.webp" class="img-fluid" alt="Bloody Rampage">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="isBloodyRampage">
+                                <label class="custom-control-label" for="isBloodyRampage">5% per bleed</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <img src="/static/images/icons/3954.webp" alt="Splitting + (III)">
+                            <select id="splittingBonus" class="form-select">
                                 <option value="0">0%</option>
                                 <option value="3">3%</option>
                                 <option value="6">6%</option>
                                 <option value="9">9%</option>
-                            </select>(II)
+                            </select>(III)
                         </div>
                     </div>
 
@@ -235,73 +274,77 @@
                 </tr>
             </thead>
             <tbody>
-                <tr id="eviscerationRow">
-                    <td style="display: flex; align-items: center;">
-                        <div style="display: inline-block;">
-                            <img src="/static/images/reaper/evisceration.png" alt="Evisceration">
-                        </div>
-                    </td>
+                <tr id="splittingRow">
+                    <td><img src="/static/images/seeker/splitting.png" alt="Splitting"></td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                 </tr>
-                <tr id="otherworldBoostRow">
-                    <td><img src="/static/images/reaper/otherworldboost.png" alt="Otherworld Boost"></td>
+                <tr id="haradShieldRow">
+                    <td><img src="/static/images/seeker/haradshield.png" alt="Harads Shield"></td>
                     <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-					<td>0</td>
-                </tr>
-                <tr id="annihilationRow">
-                    <td><img src="/static/images/reaper/annihilation.png" alt="Annihilation"></td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                 </tr>
-				<tr id="annihilationCritRow">
-                    <td><img src="/static/images/reaper/annihilation.png" alt="Annihilation">(Crit)</td>
+                <tr id="dangerousBlowRow">
+                    <td><img src="/static/images/seeker/dangerousblow.png" alt="Dangerous Blow"></td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                 </tr>
-                <tr id="widescopeRow">
-                    <td><img src="/static/images/reaper/widescope.png" alt="Wide Scope"></td>
+                <tr id="dangerousBlowDotRow">
+                    <td><img src="/static/images/seeker/dangerousblow.png" alt="Dangerous Blow">(Dot)</td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                 </tr>
-                <tr id="widescopeCritRow">
-                    <td><img src="/static/images/reaper/widescope.png" alt="Wide Scope">(Crit)</td>
+                <tr id="dangerousBlowDotCritRow">
+                    <td><img src="/static/images/seeker/dangerousblow.png" alt="Dangerous Blow">(Boosted dot)</td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                 </tr>
-                <tr id="underworldHandRow">
-                    <td><img src="/static/images/reaper/underworldhand.png" alt="Hand of the Underworld">(1 hit)</td>
+                <tr id="splittingBlowRow">
+                    <td><img src="/static/images/seeker/splittingblow.png" alt="Splitting Blow"></td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                 </tr>
-                <tr id="explosionOfChaosRow">
-                    <td><img src="/static/images/reaper/explosionofchaos.png" alt="Explosion of Chaos"></td>
+                <tr id="bloodthirstRow">
+                    <td><img src="/static/images/seeker/bloodthirst.png" alt="Bloodthirst"></td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
                 </tr>
-                <tr id="explosionOfChaosDemonRow">
-                    <td><img src="/static/images/reaper/explosionofchaos.png" alt="Explosion of Chaos">(Demon)</td>
+                <tr id="bloodthirstHealRow">
+                    <td><img src="/static/images/seeker/bloodthirst.png" alt="Bloodthirst">(Heal)</td>
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
+                    <td>0</td>
+                </tr>
+                <tr id="exhaustiveBlowRow">
+                    <td><img src="/static/images/seeker/exhaustiveblow.png" alt="Exhaustive Blow"></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+                <tr id="scarletBladeRow">
+                    <td><img src="/static/images/seeker/scarletblade.png" alt="Scarlet Blade"></td>
+                    <td>0</td>
+                </tr>
+                <tr id="autoattackRow">
+                    <td>Autoattack</td>
                     <td>0</td>
                 </tr>
             </tbody>
@@ -312,6 +355,6 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script src="/static/js/reaper.js"></script>
+    <script src="/static/js/seeker.js"></script>
 </body>
 </html>
