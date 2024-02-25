@@ -174,7 +174,7 @@ function FlurryOfSteel(physicalDamage){
 
     var percentageIncreases = [115.0, 120.0, 135.0, 150.0];
 
-    var flurryBonus = document.getElementById('relicBonus').checked ? 0.07 : 0;
+    var flurryBonus = document.getElementById('flurryBonus').checked ? 0.07 : 0;
     for (var level = 0; level < 4; level++) {
         var damage = physicalDamage * (percentageIncreases[level] / 100 + flurryBonus);
         damageLevels.push(damage);
