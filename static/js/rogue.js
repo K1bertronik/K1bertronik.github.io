@@ -148,8 +148,10 @@ function Ricochet(physicalDamage){
 
     var percentageIncreases = [75.0, 80.0, 85.0, 95.0];
 
+    var ricochetBonus = document.getElementById('ricochetBonus').checked ? 0.05 : 0;
+    
     for (var level = 0; level < 4; level++) {
-        var damage = physicalDamage * (percentageIncreases[level] / 100);
+        var damage = physicalDamage * (percentageIncreases[level] / 100 + ricochetBonus);
         damageLevels.push(damage);
     }
 
