@@ -131,12 +131,13 @@ function Call(physicalDamage){
 
     var percentageIncreases = [48.0, 54.0, 66.0, 78.0, 90.0];
 
+    var relicBonus = document.getElementById('relicBonus').checked ? 0.12 : 0;
     var callBonus = (parseFloat(document.getElementById('callBonus').value) || 0) / 100;
 	
 	var summonerSkillBonus = ((parseFloat(document.getElementById('summonerSkill').value) || 0) / 100) + ((parseFloat(document.getElementById('summonerSkillBonus').value) || 0) / 100);
 	
     for (var level = 0; level < 5; level++) {
-        var damage = (physicalDamage * (percentageIncreases[level] / 100) + callBonus) * (1 + summonerSkillBonus);
+        var damage = (physicalDamage * (percentageIncreases[level] / 100) + callBonus) * (1 + relicBonus) * (1 + summonerSkillBonus);
         damageLevels.push(damage);
 	}
 		
