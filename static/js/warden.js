@@ -134,9 +134,9 @@ function PowerfulLunge(physicalDamage){
     for (var level = 0; level < 4; level++) {
         var targets = Math.min(targetsHit, numberOfTargets[level]);
 
-        var baseDamage = physicalDamage * (percentageIncreases[level] / 100 + powerfulLungeBonus + powerfulLungeBonusII) * (numberOfTargets * increasePerTargetPercentages / 100);
+        var baseDamage = (physicalDamage * (percentageIncreases[level] / 100 + powerfulLungeBonus + powerfulLungeBonusII) * (targetsHit * increasePerTargetPercentages / 100)) / targetsHit;
 
-        damageLevels.push(damagePerTarget / numberOfTargets);
+        damageLevels.push(baseDamage);
     }
 
     return damageLevels;
