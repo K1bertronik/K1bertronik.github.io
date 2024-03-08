@@ -120,7 +120,6 @@ function WardenSpirit(maxHealth){
 
 function PowerfulLunge(physicalDamage){
     var damageLevels = [];
-    var massDamageLevels = [];
 
     var percentageIncreases = [125.0, 145.0, 165.0, 190.0];
     var increasePerTargetPercentages = [20.0, 25.0, 30.0, 35.0];
@@ -134,7 +133,7 @@ function PowerfulLunge(physicalDamage){
     for (var level = 0; level < 4; level++) {
         var targets = Math.min(targetsHit, numberOfTargets[level]);
 
-        var damage = (physicalDamage * (percentageIncreases[level] / 100 + powerfulLungeBonus + powerfulLungeBonusII) * (targets * increasePerTargetPercentages / 100)) / targets;
+        var damage = (physicalDamage * (percentageIncreases[level] / 100 + powerfulLungeBonus + powerfulLungeBonusII) * (targets * increasePerTargetPercentages[level] / 100)) / targets;
 
         damageLevels.push(damage);
     }
