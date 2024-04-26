@@ -55,9 +55,11 @@ function calculateDamage(skillDamageLevels, damageType, isInstantDamage=true, is
 
     var castleDmg = (parseFloat(document.getElementById('castleDmg').value) || 0) / 100;
 
+    var shivEarthBonus = (parseFloat(document.getElementById('shivEarthBonus').value) || 0) / 100;
+    
     for (var level = 0; level < skillDamageLevels.length; level++) {
         var skillDamage = skillDamageLevels[level];
-        var totalDamage = skillDamage * (1 - Math.max(0, (damageType === 'physical' ? targetPhysicalDefence : targetMagicalDefence) - (penetration + dotPenBonus + instPenBonus))) * (1 + talentDmgBonus + talentPVEDmgBonusI + talentPVEDmgBonusII) * (1 - targetResilience) * (1 + ferocity) * (1 + castleDmg);
+        var totalDamage = skillDamage * (1 - Math.max(0, (damageType === 'physical' ? targetPhysicalDefence : targetMagicalDefence) - (penetration + dotPenBonus + instPenBonus))) * (1 + talentDmgBonus + talentPVEDmgBonusI + talentPVEDmgBonusII) * (1 - targetResilience) * (1 + ferocity) * (1 + shivEarthBonus) * (1 + castleDmg);
 
         totalDamage = parseFloat(totalDamage.toFixed(2));
 
