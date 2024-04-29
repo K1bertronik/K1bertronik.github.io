@@ -39,8 +39,8 @@ function calculateDamage(skillDamageLevels, isInstantDamage=true, isTalent=false
     var penetration = (parseFloat(document.getElementById('penetration').value) || 0) / 100;
     var ferocity = (isPVPTarget ? (parseFloat(document.getElementById('ferocity').value) || 0) / 100 : 0);
 
-    var targetMagicalDefence = parseFloat(document.getElementById('targetMagicalDefence').value) || 0;
-    targetMagicalDefence = targetMagicalDefence / (targetMagicalDefence + 6500);
+    var targetMagicalDefence = (parseFloat(document.getElementById('targetMagicalDefencePercent').value) || 0) / 100;
+
     var targetResilience = (isPVPTarget ? (parseFloat(document.getElementById('targetResilience').value) || 0) / 100 : 0);
 
     var talentPVEDmgBonusI = (isPVPTarget || isTalent ? 0 : (parseFloat(document.getElementById('pveBonusI').value) || 0) / 100);

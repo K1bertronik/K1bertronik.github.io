@@ -38,8 +38,7 @@ function calculateDamage(skillDamageLevels, isInstantDamage=true, isTalent=false
     var penetration = (parseFloat(document.getElementById('penetration').value) || 0) / 100;
     var ferocity = (isPVPTarget ? (parseFloat(document.getElementById('ferocity').value) || 0) / 100 : 0);
 
-    var targetPhysicalDefence = parseFloat(document.getElementById('targetPhysicalDefence').value) || 0;
-    targetPhysicalDefence = targetPhysicalDefence / (targetPhysicalDefence + 6500);
+    var targetPhysicalDefence = (parseFloat(document.getElementById('targetPhysicalDefencePercent').value) || 0) / 100;
 
     var targetResilience = (isPVPTarget ? (parseFloat(document.getElementById('targetResilience').value) || 0) / 100 : 0);
 
