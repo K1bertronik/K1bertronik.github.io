@@ -204,9 +204,31 @@
                         <div class="form-group">
                             <div class="input-group">
                                 <img src="/static/images/icons/542.webp" class="img-fluid" alt="icon">
-                                <input type="number" class="form-control" id="targetPhysicalDefence">
+                                <input type="number" class="form-control" step="any" id="targetPhysicalDefence" oninput="calculatePercentage()" placeholder="6500">
+                                <input type="number" class="form-control" step="any" id="targetPhysicalDefencePercent" oninput="calculateValue()" placeholder="50%">
                             </div>
                         </div>
+                        <script>
+                            function calculatePercentage() {
+                                var targetPhysicalDefence = parseFloat(document.getElementById('targetPhysicalDefence').value);
+                                var targetPhysicalDefencePercent = targetPhysicalDefence / (targetPhysicalDefence + 6500);
+                                if (!isNaN(targetPhysicalDefencePercent)) {
+                                    document.getElementById('targetPhysicalDefencePercent').value = (targetPhysicalDefencePercent * 100).toFixed(2);
+                                } else {
+                                    document.getElementById('targetPhysicalDefencePercent').value = '';
+                                }
+                            }
+
+                            function calculateValue() {
+                                var targetPhysicalDefencePercent = (parseFloat(document.getElementById('targetPhysicalDefencePercent').value) || 0) / 100;
+                                var targetPhysicalDefence = (targetPhysicalDefencePercent * 6500) / (1 - targetPhysicalDefencePercent);
+                                if (!isNaN(targetPhysicalDefence)) {
+                                    document.getElementById('targetPhysicalDefence').value = targetPhysicalDefence.toFixed(2);
+                                } else {
+                                    document.getElementById('targetPhysicalDefence').value = '';
+                                }
+                            }
+                        </script>
                         <div class="form-group">
                             <div class="input-group">
                                 <img src="/static/images/icons/552.webp" class="img-fluid" alt="icon">

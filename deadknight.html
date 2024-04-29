@@ -176,15 +176,54 @@
                         <div class="form-group">
                             <div class="input-group">
                                 <img src="/static/images/icons/542.webp" class="img-fluid" alt="icon">
-                                <input type="number" class="form-control" id="targetPhysicalDefence">
+                                <input type="number" class="form-control" step="any" id="targetPhysicalDefence" oninput="calculatePercentage()" placeholder="6500">
+                                <input type="number" class="form-control" step="any" id="targetPhysicalDefencePercent" oninput="calculateValue()" placeholder="50%">
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="input-group">
                                 <img src="/static/images/icons/896.webp" class="img-fluid" alt="icon">
-                                <input type="number" class="form-control" id="targetMagicalDefence">
+                                <input type="number" class="form-control" step="any" id="targetMagicalDefence" oninput="calculatePercentage()" placeholder="6500">
+                                <input type="number" class="form-control" step="any" id="targetMagicalDefencePercent" oninput="calculateValue()" placeholder="50%">
                             </div>
                         </div>
+                        <script>
+                            function calculatePercentage() {
+                                var targetPhysicalDefence = parseFloat(document.getElementById('targetPhysicalDefence').value);
+                                var targetPhysicalDefencePercent = targetPhysicalDefence / (targetPhysicalDefence + 6500);
+                                if (!isNaN(targetPhysicalDefencePercent)) {
+                                    document.getElementById('targetPhysicalDefencePercent').value = (targetPhysicalDefencePercent * 100).toFixed(2);
+                                } else {
+                                    document.getElementById('targetPhysicalDefencePercent').value = '';
+                                }
+
+                                var targetMagicalDefence = parseFloat(document.getElementById('targetMagicalDefence').value);
+                                var targetMagicalDefencePercent = targetMagicalDefence / (targetMagicalDefence + 6500);
+                                if (!isNaN(targetMagicalDefencePercent)) {
+                                    document.getElementById('targetMagicalDefencePercent').value = (targetMagicalDefencePercent * 100).toFixed(2);
+                                } else {
+                                    document.getElementById('targetMagicalDefencePercent').value = '';
+                                }
+                            }
+
+                            function calculateValue() {
+                                var targetPhysicalDefencePercent = (parseFloat(document.getElementById('targetPhysicalDefencePercent').value) || 0) / 100;
+                                var targetPhysicalDefence = (targetPhysicalDefencePercent * 6500) / (1 - targetPhysicalDefencePercent);
+                                if (!isNaN(targetPhysicalDefence)) {
+                                    document.getElementById('targetPhysicalDefence').value = targetPhysicalDefence.toFixed(2);
+                                } else {
+                                    document.getElementById('targetPhysicalDefence').value = '';
+                                }
+
+                                var targetMagicalDefencePercent = (parseFloat(document.getElementById('targetMagicalDefencePercent').value) || 0) / 100;
+                                var targetMagicalDefence = (targetMagicalDefencePercent * 6500) / (1 - targetMagicalDefencePercent);
+                                if (!isNaN(targetMagicalDefence)) {
+                                    document.getElementById('targetMagicalDefence').value = targetMagicalDefence.toFixed(2);
+                                } else {
+                                    document.getElementById('targetMagicalDefence').value = '';
+                                }
+                            }
+                        </script>
                         <div class="form-group">
                             <div class="input-group">
                                 <img src="/static/images/icons/552.webp" class="img-fluid" alt="icon">
