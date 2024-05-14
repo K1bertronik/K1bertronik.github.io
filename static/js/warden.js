@@ -5,7 +5,7 @@ document.getElementById('calcForm').addEventListener('submit', function (event) 
     var health = parseFloat(document.getElementById('health').value) || 0;
     var combatHeal = parseFloat(document.getElementById('combatHealValue').value) || 0;
 
-    var powefulBlowDamage = calculateDamage(PowerfulBlow(physicalDamage));
+    var powefulBlowDamage = calculateDamage(PowerfulBlow(physicalDamage), false, true);
     var waveOfAggroHeal = calculateHeal(WaveOfAggression(health));
     var wardenSpiritShield = WardenSpirit(health);
     var powefulLungeDamage = calculateDamage(PowerfulLunge(physicalDamage));
@@ -22,7 +22,7 @@ document.getElementById('calcForm').addEventListener('submit', function (event) 
     updateDamageValues(combatHealingDamage, "combatHealingRow");
 });
 
-function calculateDamage(skillDamageLevels, isTalent=false) {
+function calculateDamage(skillDamageLevels, isTalent=false, isBasicSkill=false) {
     var totalDamageLevels = [];
 
     var isPVPTarget = document.getElementById('pvpSwitch').checked;
@@ -39,10 +39,11 @@ function calculateDamage(skillDamageLevels, isTalent=false) {
     var talentPVEDmgBonusII = (isPVPTarget ? 0 : (parseFloat(document.getElementById('pveBonusII').value) || 0) / 100);
 
     var castleDmg = (isTalent ? 0 : (parseFloat(document.getElementById('castleDmg').value) || 0) / 100);
+    var exclusiveAttackBonus = (isBasicSkill ? (document.getElementById('exclusiveAttackBonus').checked ? 0.10 : 0) : 0);
 
     for (var level = 0; level < skillDamageLevels.length; level++) {
         var skillDamage = skillDamageLevels[level];
-        var totalDamage = skillDamage * (1 - targetPhysicalReduction) * (1 + talentPVEDmgBonusI + talentPVEDmgBonusII) * (1 - targetResilience) * (1 + ferocity) * (1 + castleDmg);
+        var totalDamage = skillDamage * (1 - targetPhysicalReduction) * (1 + talentPVEDmgBonusI + talentPVEDmgBonusII) * (1 - targetResilience) * (1 + ferocity) * (1 + castleDmg + exclusiveAttackBonus);
         totalDamage = parseFloat(totalDamage.toFixed(2));
 
         totalDamageLevels.push(totalDamage);
@@ -75,10 +76,12 @@ function PowerfulBlow(physicalDamage){
     var percentageIncreases = [115.0, 120.0, 125.0, 130.0, 135.0];
 
     var relicBonus = document.getElementById('relicBonus').checked ? 0.12 : 0;
+    var unitedBonus = (parseFloat(document.getElementById('unitedAttackBonus').value) || 0) / 100;
+
     var powerfulBlowBonus = (parseFloat(document.getElementById('powerfulBlowBonus').value) || 0) / 100;
 
     for (var level = 0; level < 5; level++) {
-        var damage = (baseValues[level] + physicalDamage * (percentageIncreases[level] / 100 + powerfulBlowBonus)) * (1 + relicBonus);
+        var damage = (baseValues[level] + physicalDamage * (percentageIncreases[level] / 100 + powerfulBlowBonus)) * (1 + relicBonus + unitedBonus);
         damageLevels.push(damage);
     }
 

@@ -4,9 +4,9 @@ document.getElementById('calcForm').addEventListener('submit', function (event) 
     var magicalDamage = parseFloat(document.getElementById('magicdmg').value) || 0;
     var health = parseFloat(document.getElementById('health').value) || 0;
 
-    var lightningBallDamage = calculateDamage(LightningBall(magicalDamage));
+    var lightningBallDamage = calculateDamage(LightningBall(magicalDamage), false, true);
     var healingSpiritHeal = calculateHeal(HealingSpirit(magicalDamage));
-    var earthquakeDamage = calculateDamage(Earthquake(magicalDamage));
+    var earthquakeDamage = calculateDamage(Earthquake(magicalDamage), false, true);
     var lightningShieldDamage = calculateDamage(LightningShield(magicalDamage));
     var fireTotemDamage = calculateDamage(FireTotem(magicalDamage));
     var fireTotemTickDamage = calculateDamage(FireTotemTick(magicalDamage));
@@ -27,7 +27,7 @@ document.getElementById('calcForm').addEventListener('submit', function (event) 
     updateDamageValues(ancestralCharmHeal, "ancestralCharmRow");
 });
 
-function calculateDamage(skillDamageLevels, isTalent=false) {
+function calculateDamage(skillDamageLevels, isTalent=false, isBasicSkill=false) {
     var totalDamageLevels = [];
 
     var isPVPTarget = document.getElementById('pvpSwitch').checked;
@@ -44,10 +44,11 @@ function calculateDamage(skillDamageLevels, isTalent=false) {
     var talentPVEDmgBonusII = (isPVPTarget ? 0 : (parseFloat(document.getElementById('pveBonusII').value) || 0) / 100);
 
     var castleDmg = (isTalent ? 0 : (parseFloat(document.getElementById('castleDmg').value) || 0) / 100);
+    var exclusiveAttackBonus = (isBasicSkill ? (document.getElementById('exclusiveAttackBonus').checked ? 0.10 : 0) : 0);
 
     for (var level = 0; level < skillDamageLevels.length; level++) {
         var skillDamage = skillDamageLevels[level];
-        var totalDamage = skillDamage * (1 - targetMagicalReduction) * (1 + talentPVEDmgBonusI + talentPVEDmgBonusII) * (1 - targetResilience) * (1 + ferocity) * (1 + castleDmg);
+        var totalDamage = skillDamage * (1 - targetMagicalReduction) * (1 + talentPVEDmgBonusI + talentPVEDmgBonusII) * (1 - targetResilience) * (1 + ferocity) * (1 + castleDmg + exclusiveAttackBonus);
         totalDamage = parseFloat(totalDamage.toFixed(2));
 
         totalDamageLevels.push(totalDamage);
@@ -82,10 +83,12 @@ function LightningBall(magicalDamage){
     var percentageIncreases = [110.0, 115.0, 120.0, 125.0, 130.0];
 
     var relicBonus = document.getElementById('relicBonus').checked ? 0.12 : 0;
+    var unitedBonus = (parseFloat(document.getElementById('unitedAttackBonus').value) || 0) / 100;
+
     var lightningBallBonus = (parseFloat(document.getElementById('lightningBallBonus').value) || 0) / 100;
 
     for (var level = 0; level < 5; level++) {
-        var damage = (baseValues[level] + magicalDamage * (percentageIncreases[level] / 100 + lightningBallBonus)) * (1 + relicBonus);
+        var damage = (baseValues[level] + magicalDamage * (percentageIncreases[level] / 100 + lightningBallBonus)) * (1 + relicBonus + unitedBonus);
         damageLevels.push(damage);
     }
 

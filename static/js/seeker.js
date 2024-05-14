@@ -4,7 +4,7 @@ document.getElementById('calcForm').addEventListener('submit', function (event) 
     var physicalDamage = parseFloat(document.getElementById('physdmg').value) || 0;
     var health = parseFloat(document.getElementById('health').value) || 0;
 
-    var splittingDamage = calculateDamage(Splitting(physicalDamage));
+    var splittingDamage = calculateDamage(Splitting(physicalDamage), true, true);
     var haradShield = HaradShield(health);
     var dangerousBlowDamage = calculateDamage(DangerousBlow(physicalDamage));
     var dangerousBlowDotDamage = calculateDamage(DangerousBlowDot(physicalDamage));
@@ -29,7 +29,7 @@ document.getElementById('calcForm').addEventListener('submit', function (event) 
     updateDamageValues(autoattackDamage, "autoattackRow");
 });
 
-function calculateDamage(skillDamageLevels, isInstantDamage=true) {
+function calculateDamage(skillDamageLevels, isInstantDamage=true, isBasicSkill=false) {
     var totalDamageLevels = [];
 
     var isPVPTarget = document.getElementById('pvpSwitch').checked;
@@ -50,12 +50,13 @@ function calculateDamage(skillDamageLevels, isInstantDamage=true) {
     var instPenBonus = (!isInstantDamage ? 0 : (parseFloat(document.getElementById('instPenBonus').value) || 0) / 100);
 
     var castleDmg = (parseFloat(document.getElementById('castleDmg').value) || 0) / 100;
+    var exclusiveAttackBonus = (isBasicSkill ? (document.getElementById('exclusiveAttackBonus').checked ? 0.10 : 0) : 0);
 
     var attractionBonus = (parseFloat(document.getElementById('attractionBonus').value) || 0) / 100;
 
     for (var level = 0; level < skillDamageLevels.length; level++) {
         var skillDamage = skillDamageLevels[level];
-        var totalDamage = skillDamage * (1 - Math.max(0, targetPhysicalDefence - (penetration + dotPenBonus + instPenBonus))) * (1 + talentDmgBonus + talentPVEDmgBonusI + talentPVEDmgBonusII) * (1 - targetResilience) * (1 + ferocity) * (1 + castleDmg) * (1 + attractionBonus);
+        var totalDamage = skillDamage * (1 - Math.max(0, targetPhysicalDefence - (penetration + dotPenBonus + instPenBonus))) * (1 + talentDmgBonus + talentPVEDmgBonusI + talentPVEDmgBonusII) * (1 - targetResilience) * (1 + ferocity) * (1 + castleDmg + exclusiveAttackBonus) * (1 + attractionBonus);
         totalDamage = parseFloat(totalDamage.toFixed(2));
 
         totalDamageLevels.push(totalDamage);
@@ -90,10 +91,12 @@ function Splitting(physicalDamage){
     var percentageIncreases = [140.0, 145.0, 150.0, 155.0, 160.0];
 
     var relicBonus = document.getElementById('relicBonus').checked ? 0.12 : 0;
+    var unitedBonus = (parseFloat(document.getElementById('unitedAttackBonus').value) || 0) / 100;
+
     var splittingBonus = (parseFloat(document.getElementById('splittingBonus').value) || 0) / 100;
 
     for (var level = 0; level < 5; level++) {
-        var damage = (baseValues[level] + physicalDamage * (percentageIncreases[level] / 100 + splittingBonus)) * (1 + relicBonus);
+        var damage = (baseValues[level] + physicalDamage * (percentageIncreases[level] / 100 + splittingBonus)) * (1 + relicBonus + unitedBonus);
         damageLevels.push(damage);
     }
 

@@ -12,10 +12,10 @@ document.getElementById('calcForm').addEventListener('submit', function (event) 
     var bearStaminaHealthHeal = calculateHeal(BearStaminaHealth(maxHealth, currentHealth));
     var bearStaminaHeal = calculateHeal(BearStamina(magicalDamage));
     var wolfsAlacrityDamage = calculateDamage(WolfsAlacrity(physicalDamage), 'physical', false);
-    var curseOfPlagueDamage = calculateDamage(CurseOfPlague(physicalDamage), 'physical', false);
-    var swoopingArmyDamage = calculateDamage(SwoopingArmy(magicalDamage), 'magical', false);
-    var frenzyDamage = calculateDamage(Frenzy(physicalDamage), 'physical');
-    var ignitionDamage = calculateDamage(Ignition(magicalDamage), 'magical', false, true);
+    var curseOfPlagueDamage = calculateDamage(CurseOfPlague(physicalDamage), 'physical', false, false, false);
+    var swoopingArmyDamage = calculateDamage(SwoopingArmy(magicalDamage), 'magical', false, false, false);
+    var frenzyDamage = calculateDamage(Frenzy(physicalDamage), 'physical', true, false, false);
+    var ignitionDamage = calculateDamage(Ignition(magicalDamage), 'magical', false, true, false);
 
     updateDamageValues(blowOfSpiritsDamage, "blowOfSpiritsRow");
     updateDamageValues(eaglesEyeMagDamage, "eaglesEyeMagRow");
@@ -29,7 +29,7 @@ document.getElementById('calcForm').addEventListener('submit', function (event) 
     updateDamageValues(ignitionDamage, "ignitionRow");
 });
 
-function calculateDamage(skillDamageLevels, damageType, isInstantDamage=true, isTalent=false) {
+function calculateDamage(skillDamageLevels, damageType, isInstantDamage=true, isTalent=false, isBasicSkill=true) {
     var totalDamageLevels = [];
 
     var isPVPTarget = document.getElementById('pvpSwitch').checked;
@@ -52,12 +52,13 @@ function calculateDamage(skillDamageLevels, damageType, isInstantDamage=true, is
     var instPenBonus = (!isInstantDamage ? 0 : (parseFloat(document.getElementById('instPenBonus').value) || 0) / 100);
 
     var castleDmg = (parseFloat(document.getElementById('castleDmg').value) || 0) / 100;
+    var exclusiveAttackBonus = (isBasicSkill ? (document.getElementById('exclusiveAttackBonus').checked ? 0.10 : 0) : 0);
 
     var shivEarthBonus = (parseFloat(document.getElementById('shivEarthBonus').value) || 0) / 100;
     
     for (var level = 0; level < skillDamageLevels.length; level++) {
         var skillDamage = skillDamageLevels[level];
-        var totalDamage = skillDamage * (1 - Math.max(0, (damageType === 'physical' ? targetPhysicalDefence : targetMagicalDefence) - (penetration + dotPenBonus + instPenBonus))) * (1 + talentDmgBonus + talentPVEDmgBonusI + talentPVEDmgBonusII) * (1 - targetResilience) * (1 + ferocity) * (1 + shivEarthBonus) * (1 + castleDmg);
+        var totalDamage = skillDamage * (1 - Math.max(0, (damageType === 'physical' ? targetPhysicalDefence : targetMagicalDefence) - (penetration + dotPenBonus + instPenBonus))) * (1 + talentDmgBonus + talentPVEDmgBonusI + talentPVEDmgBonusII) * (1 - targetResilience) * (1 + ferocity) * (1 + shivEarthBonus) * (1 + castleDmg + exclusiveAttackBonus);
 
         totalDamage = parseFloat(totalDamage.toFixed(2));
 
@@ -94,13 +95,15 @@ function BlowOfSpirits(physicalDamage, magicalDamage){
     var percentageMagIncreases = [130.0, 140.0, 150.0, 165.0, 175.0];
 
     var relicBonus = document.getElementById('relicBonus').checked ? 0.12 : 0;
+    var unitedBonus = (parseFloat(document.getElementById('unitedAttackBonus').value) || 0) / 100;
+
     var blowOfSpiritsBonus = (parseFloat(document.getElementById('blowOfSpiritsBonus').value) || 0) / 100;
 
     for (var level = 0; level < 5; level++) {
         if (physicalDamage > magicalDamage) {
-            var damage = (basePhysValues[level] + physicalDamage * (percentagePhysIncreases[level] / 100)) * (1 + relicBonus);
+            var damage = (basePhysValues[level] + physicalDamage * (percentagePhysIncreases[level] / 100)) * (1 + relicBonus + unitedBonus);
         } else {
-            var damage = (baseMagValues[level] + magicalDamage * (percentageMagIncreases[level] / 100 + blowOfSpiritsBonus)) * (1 + relicBonus);
+            var damage = (baseMagValues[level] + magicalDamage * (percentageMagIncreases[level] / 100 + blowOfSpiritsBonus)) * (1 + relicBonus + unitedBonus);
         }
         damageLevels.push(damage);
     }

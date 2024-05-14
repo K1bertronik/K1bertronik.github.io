@@ -17,8 +17,8 @@ document.getElementById('calcForm').addEventListener('submit', function (event) 
     var chainLightning = calculateDamage(ChainLightning(physicalDamage, magicalDamage), (physicalDamage > magicalDamage) ? 'physical' : 'magical');
     var bestialRampageHeal = calculateHeal(BestialRampage());
     var soulConnectionHeal = calculateHeal(SoulConnection(moonHealth[beastLevel]));
-    var moonlightDamage = calculateDamage(Moonlight(magicalDamage), 'magical', false);
-    var auraOfForestDamage = calculateDamage(AuraOfForest(magicalDamage), 'magical', false);
+    var moonlightDamage = calculateDamage(Moonlight(magicalDamage), 'magical', false, false, false);
+    var auraOfForestDamage = calculateDamage(AuraOfForest(magicalDamage), 'magical', false, false, false);
     var proximityToNatureHeal = calculateHeal(ProximityToNature(magicalDamage));
 
     updateDamageValues(moonHealth, "beastAwakeHealthRow");
@@ -35,7 +35,7 @@ document.getElementById('calcForm').addEventListener('submit', function (event) 
     updateDamageValues(proximityToNatureHeal, "proximityToNatureRow");
 });
 
-function calculateDamage(skillDamageLevels, damageType, isInstantDamage=true, isTalent=false) {
+function calculateDamage(skillDamageLevels, damageType, isInstantDamage=true, isTalent=false, isBasicSkill=true) {
     var totalDamageLevels = [];
 
     var isPVPTarget = document.getElementById('pvpSwitch').checked;
@@ -58,10 +58,11 @@ function calculateDamage(skillDamageLevels, damageType, isInstantDamage=true, is
     var instPenBonus = (!isInstantDamage ? 0 : (parseFloat(document.getElementById('instPenBonus').value) || 0) / 100);
 
     var castleDmg = (parseFloat(document.getElementById('castleDmg').value) || 0) / 100;
+    var exclusiveAttackBonus = (isBasicSkill ? (document.getElementById('exclusiveAttackBonus').checked ? 0.10 : 0) : 0);
 
     for (var level = 0; level < skillDamageLevels.length; level++) {
         var skillDamage = skillDamageLevels[level];
-        var totalDamage = skillDamage * (1 - Math.max(0, (damageType === 'physical' ? targetPhysicalDefence : targetMagicalDefence) - (penetration + dotPenBonus + instPenBonus))) * (1 + talentDmgBonus + talentPVEDmgBonusI + talentPVEDmgBonusII) * (1 - targetResilience) * (1 + ferocity) * (1 + castleDmg);
+        var totalDamage = skillDamage * (1 - Math.max(0, (damageType === 'physical' ? targetPhysicalDefence : targetMagicalDefence) - (penetration + dotPenBonus + instPenBonus))) * (1 + talentDmgBonus + talentPVEDmgBonusI + talentPVEDmgBonusII) * (1 - targetResilience) * (1 + ferocity) * (1 + castleDmg + exclusiveAttackBonus);
 
         totalDamage = parseFloat(totalDamage.toFixed(2));
 
@@ -123,10 +124,12 @@ function MoonTouch(magicalDamage){
     var percentageIncreases = [130.0, 140.0, 155.0, 165.0, 175.0];
 
     var relicBonus = document.getElementById('relicBonus').checked ? 0.12 : 0;
+    var unitedBonus = (parseFloat(document.getElementById('unitedAttackBonus').value) || 0) / 100;
+
     var moonTouchBonus = document.getElementById('moonTouchBonus').checked ? 0.05 : 0;
 
     for (var level = 0; level < 5; level++) {
-        damage = baseValues[level] + magicalDamage * (percentageIncreases[level] / 100 + moonTouchBonus) * (1 + relicBonus);
+        damage = baseValues[level] + magicalDamage * (percentageIncreases[level] / 100 + moonTouchBonus) * (1 + relicBonus + unitedBonus);
         damageLevels.push(damage);
     }
 

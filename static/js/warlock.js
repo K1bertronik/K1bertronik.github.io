@@ -9,10 +9,10 @@ document.getElementById('calcForm').addEventListener('submit', function (event) 
 	var isPVPTarget = document.getElementById('pvpSwitch').checked;
 	var energyLimit = (isPVPTarget ? 300 : 500);
 	
-    var arrowOfDarknessDamage = calculateDamage(ArrowOfDarkness(magicalDamage, maxEnergy, isPVPTarget, energyLimit));
-	var drainingLifeDamage = calculateDamage(DrainingLife(magicalDamage), false);
+    var arrowOfDarknessDamage = calculateDamage(ArrowOfDarkness(magicalDamage, maxEnergy, isPVPTarget, energyLimit), true, false, true);
+	var drainingLifeDamage = calculateDamage(DrainingLife(magicalDamage), false, false, true);
 	var drainingLifeHeal = calculateHeal(DrainingLifeHeal(drainingLifeDamage));
-	var poolOfDarknessDamage = calculateDamage(PoolOfDarkness(magicalDamage, maxEnergy, isPVPTarget, energyLimit), false);
+	var poolOfDarknessDamage = calculateDamage(PoolOfDarkness(magicalDamage, maxEnergy, isPVPTarget, energyLimit), false, false, true);
 	var bloodyTributeHeal = calculateHeal(BloodyTribute(magicalDamage, lostEnergy));
 	var shadowSphereDamage = calculateDamage(ShadowSphere(magicalDamage, maxEnergy, isPVPTarget, energyLimit));
 	var hexDamage = calculateDamage(Hex(magicalDamage), false);
@@ -36,7 +36,7 @@ document.getElementById('calcForm').addEventListener('submit', function (event) 
     updateDamageValues(twilightPactRegen, "twilightPactRegenRow");
 });
 
-function calculateDamage(skillDamageLevels, isInstantDamage=true, isTalent=false) {
+function calculateDamage(skillDamageLevels, isInstantDamage=true, isTalent=false, isBasicSkill=false) {
     var totalDamageLevels = [];
 	
 	var isPVPTarget = document.getElementById('pvpSwitch').checked;
@@ -57,10 +57,11 @@ function calculateDamage(skillDamageLevels, isInstantDamage=true, isTalent=false
     var instPenBonus = (!isInstantDamage ? 0 : (parseFloat(document.getElementById('instPenBonus').value) || 0) / 100);
 
     var castleDmg = (parseFloat(document.getElementById('castleDmg').value) || 0) / 100;
+    var exclusiveAttackBonus = (isBasicSkill ? (document.getElementById('exclusiveAttackBonus').checked ? 0.10 : 0) : 0);
 
     for (var level = 0; level < skillDamageLevels.length; level++) {
         var skillDamage = skillDamageLevels[level];
-        var totalDamage = skillDamage * (1 - Math.max(0, targetMagicalDefence - (penetration + dotPenBonus + instPenBonus))) * (1 + talentDmgBonus + talentPVEDmgBonusI + talentPVEDmgBonusII) * (1 - targetResilience) * (1 + ferocity) * (1 + castleDmg);
+        var totalDamage = skillDamage * (1 - Math.max(0, targetMagicalDefence - (penetration + dotPenBonus + instPenBonus))) * (1 + talentDmgBonus + talentPVEDmgBonusI + talentPVEDmgBonusII) * (1 - targetResilience) * (1 + ferocity) * (1 + castleDmg + exclusiveAttackBonus);
         totalDamage = parseFloat(totalDamage.toFixed(2));
 
         totalDamageLevels.push(totalDamage);
@@ -93,14 +94,16 @@ function ArrowOfDarkness(magicalDamage, energy, isPVPTarget, energyLimit){
     var percentageIncreases = [110.0, 115.0, 120.0, 125.0, 130.0];
 	
     var relicBonus = document.getElementById('relicBonus').checked ? 0.12 : 0;
+    var unitedBonus = (parseFloat(document.getElementById('unitedAttackBonus').value) || 0) / 100;
+
     var arrowBonus = (document.getElementById('arrowBonus').checked ? 0.05 : 0);
 	var arrowBonusI = (parseFloat(document.getElementById('arrowBonusI').value) || 0) / 100;
 
     for (var level = 0; level < 5; level++) {
 		if (isPVPTarget) {
-			var damage = (baseValues[level] + magicalDamage * (percentageIncreases[level] / 100 + arrowBonus + arrowBonusI)) * (energy < energyLimit ? (1 + ((energy / 5) / 100)) : (2.6 - (900 / (energy - 300 + 900)))) * (1 + relicBonus);
+			var damage = (baseValues[level] + magicalDamage * (percentageIncreases[level] / 100 + arrowBonus + arrowBonusI)) * (energy < energyLimit ? (1 + ((energy / 5) / 100)) : (2.6 - (900 / (energy - 300 + 900)))) * (1 + relicBonus + unitedBonus);
 		} else {
-			var damage = (baseValues[level] + magicalDamage * (percentageIncreases[level] / 100 + arrowBonus + arrowBonusI)) * (energy < energyLimit ? (1 + ((energy / 5) / 100)) : (3 - (500 / (energy - 500 + 500)))) * (1 + relicBonus);
+			var damage = (baseValues[level] + magicalDamage * (percentageIncreases[level] / 100 + arrowBonus + arrowBonusI)) * (energy < energyLimit ? (1 + ((energy / 5) / 100)) : (3 - (500 / (energy - 500 + 500)))) * (1 + relicBonus + unitedBonus);
 		}
         damageLevels.push(damage);
     }

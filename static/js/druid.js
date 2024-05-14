@@ -7,14 +7,14 @@ document.getElementById('calcForm').addEventListener('submit', function (event) 
     var lightningBoltDamage = calculateDamage(LightningBolt(magicalDamage));
     var dewHeal = calculateHeal(HealingDew(magicalDamage));
     var insectSwarmDamage = calculateDamage(InsectSwarm(magicalDamage));
-    var tornadoDamage = calculateDamage(Tornado(magicalDamage));
+    var tornadoDamage = calculateDamage(Tornado(magicalDamage), false, false);
     var secretLinkHeal = calculateHeal(SecretLink(magicalDamage));
     var streamHeal = calculateHeal(InvigoratingStream(magicalDamage));
-    var powerOfWaterDamage = calculateDamage(PowerOfWater(magicalDamage)[0]);
-    var powerOfWaterMassDamage = calculateDamage(PowerOfWater(magicalDamage)[1]);
+    var powerOfWaterDamage = calculateDamage(PowerOfWater(magicalDamage)[0], false, false);
+    var powerOfWaterMassDamage = calculateDamage(PowerOfWater(magicalDamage)[1], false, false);
     var barrierHeal = calculateHeal(Barrier(magicalDamage, health));
     var nimbusHeal = calculateHeal(Nimbus(health));
-    var waterSpiritDamage = calculateDamage(WaterSpirit(magicalDamage, health)[0]);
+    var waterSpiritDamage = calculateDamage(WaterSpirit(magicalDamage, health)[0], true, false);
     var waterSpiritHealth = WaterSpirit(magicalDamage, health)[1];
 
     updateDamageValues(lightningBoltDamage, "lightningBoltRow");
@@ -31,7 +31,7 @@ document.getElementById('calcForm').addEventListener('submit', function (event) 
     updateDamageValues(waterSpiritHealth, "waterSpiritHealthRow");
 });
 
-function calculateDamage(skillDamageLevels, isTalent=false) {
+function calculateDamage(skillDamageLevels, isTalent=false, isBasicSkill=true) {
     var totalDamageLevels = [];
 
     var isPVPTarget = document.getElementById('pvpSwitch').checked;
@@ -48,10 +48,11 @@ function calculateDamage(skillDamageLevels, isTalent=false) {
     var talentPVEDmgBonusII = (isPVPTarget ? 0 : (parseFloat(document.getElementById('pveBonusII').value) || 0) / 100);
 
     var castleDmg = (isTalent ? 0 : (parseFloat(document.getElementById('castleDmg').value) || 0) / 100);
+    var exclusiveAttackBonus = (isBasicSkill ? (document.getElementById('exclusiveAttackBonus').checked ? 0.10 : 0) : 0);
 
     for (var level = 0; level < skillDamageLevels.length; level++) {
         var skillDamage = skillDamageLevels[level];
-        var totalDamage = skillDamage * (1 - targetMagicalReduction) * (1 + talentPVEDmgBonusI + talentPVEDmgBonusII) * (1 - targetResilience) * (1 + ferocity) * (1 + castleDmg);
+        var totalDamage = skillDamage * (1 - targetMagicalReduction) * (1 + talentPVEDmgBonusI + talentPVEDmgBonusII) * (1 - targetResilience) * (1 + ferocity) * (1 + castleDmg + exclusiveAttackBonus);
         totalDamage = parseFloat(totalDamage.toFixed(2));
 
         totalDamageLevels.push(totalDamage);
@@ -85,10 +86,12 @@ function LightningBolt(magicalDamage){
     var percentageIncreases = [110.0, 115.0, 120.0, 125.0, 130.0];
 
     var relicBonus = document.getElementById('relicBonus').checked ? 0.12 : 0;
+    var unitedBonus = (parseFloat(document.getElementById('unitedAttackBonus').value) || 0) / 100;
+
     var lightningBoltBonus = (parseFloat(document.getElementById('lightningBoltBonus').value) || 0) / 100;
 
     for (var level = 0; level < 5; level++) {
-        var damage = (baseValues[level] + magicalDamage * (percentageIncreases[level] / 100 + lightningBoltBonus)) * (1 + relicBonus);
+        var damage = (baseValues[level] + magicalDamage * (percentageIncreases[level] / 100 + lightningBoltBonus)) * (1 + relicBonus + unitedBonus);
         damageLevels.push(damage);
     }
 

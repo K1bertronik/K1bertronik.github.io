@@ -7,13 +7,13 @@ document.getElementById('calcForm').addEventListener('submit', function (event) 
 	
 	var thornOfDeathDamage = calculateDamage(ThornOfDeath(physicalDamage), 'physical');
 	var exhalationOfDarknessDamage = calculateDamage(ExhalationOfDarkness(magicalDamage), 'magical');
-	var steelHurricaneDamage = calculateDamage(SteelHurricane(physicalDamage, magicalDamage), 'physical');
+	var steelHurricaneDamage = calculateDamage(SteelHurricane(physicalDamage, magicalDamage), 'physical', false, false);
 	var enjoyingBloodDamage = EnjoyingBlood(steelHurricaneDamage)[0];
 	var enjoyingBloodHeal = calculateHeal(EnjoyingBlood(steelHurricaneDamage)[1]);
-	var sharpShadowDamage = calculateDamage(SharpShadow(magicalDamage, health)[0], 'magical');
+	var sharpShadowDamage = calculateDamage(SharpShadow(magicalDamage, health)[0], 'magical', false, false);
 	var sharpShadowHeal = calculateHeal(SharpShadow(magicalDamage, health)[1]);
-	var knightsCurseDamage = calculateDamage(KnightsCurse(magicalDamage), 'magical');
-	var echoOfForsakenDamage = calculateDamage(KnightsCurse(magicalDamage, true), 'magical');
+	var knightsCurseDamage = calculateDamage(KnightsCurse(magicalDamage), 'magical', false, false);
+	var echoOfForsakenDamage = calculateDamage(KnightsCurse(magicalDamage, true), 'magical', false, false);
 	
     updateDamageValues(thornOfDeathDamage, "thornOfDeathRow");
     updateDamageValues(exhalationOfDarknessDamage, "exhalationOfDarknessRow");
@@ -26,7 +26,7 @@ document.getElementById('calcForm').addEventListener('submit', function (event) 
     updateDamageValues(echoOfForsakenDamage, "echoOfForsakenRow");
 });
 
-function calculateDamage(skillDamageLevels, damageType, isTalent=false) {
+function calculateDamage(skillDamageLevels, damageType, isTalent=false, isBasicSkill=true) {
     var totalDamageLevels = [];
 
     var isPVPTarget = document.getElementById('pvpSwitch').checked;
@@ -48,10 +48,11 @@ function calculateDamage(skillDamageLevels, damageType, isTalent=false) {
     var talentPVEDmgBonusII = (isPVPTarget ? 0 : (parseFloat(document.getElementById('pveBonusII').value) || 0) / 100);
 
     var castleDmg = (parseFloat(document.getElementById('castleDmg').value) || 0) / 100;
+    var exclusiveAttackBonus = (isBasicSkill ? (document.getElementById('exclusiveAttackBonus').checked ? 0.10 : 0) : 0);
 
     for (var level = 0; level < skillDamageLevels.length; level++) {
         var skillDamage = skillDamageLevels[level];
-        var totalDamage = skillDamage * (damageType === 'physical' ? (1 - targetPhysicalReduction) : (1 - targetMagicalReduction)) * (1 + talentPVEDmgBonusI + talentPVEDmgBonusII) * (1 - targetResilience) * (1 + ferocity) * (1 + castleDmg);
+        var totalDamage = skillDamage * (damageType === 'physical' ? (1 - targetPhysicalReduction) : (1 - targetMagicalReduction)) * (1 + talentPVEDmgBonusI + talentPVEDmgBonusII) * (1 - targetResilience) * (1 + ferocity) * (1 + castleDmg + exclusiveAttackBonus);
 
         totalDamage = parseFloat(totalDamage.toFixed(2));
 
@@ -85,10 +86,12 @@ function ThornOfDeath(physicalDamage){
     var percentageIncreases = [115.0, 120.0, 125.0, 130.0, 135.0];
 
     var relicBonus = document.getElementById('relicBonus').checked ? 0.12 : 0;
+    var unitedBonus = (parseFloat(document.getElementById('unitedAttackBonus').value) || 0) / 100;
+
     var thornOfDeathBonus = (parseFloat(document.getElementById('thornOfDeathBonus').value) || 0) / 100;
 
     for (var level = 0; level < 5; level++) {
-        var damage = baseValues[level] + physicalDamage * (percentageIncreases[level] / 100 + thornOfDeathBonus) * (1 + relicBonus);
+        var damage = baseValues[level] + physicalDamage * (percentageIncreases[level] / 100 + thornOfDeathBonus) * (1 + relicBonus + unitedBonus);
         damageLevels.push(damage);
     }
 

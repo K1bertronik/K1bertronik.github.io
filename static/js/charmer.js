@@ -10,10 +10,10 @@ document.getElementById('calcForm').addEventListener('submit', function (event) 
 	var combatHeal = calculateHeal(CombatHealing(magicalDamage)[1]);
 	var callDamage = calculateDamage(Call(physicalDamage), 'physical');
 	var oppressionDamage = calculateDamage(Oppression(magicalDamage), 'magical');
-	var knowledgeDamage = calculateDamage(Knowledge(physicalDamage, magicalDamage), (physicalDamage > magicalDamage) ? 'physical' : 'magical');
-	var otherworldFireDamage = calculateDamage(OtherworldFire(magicalDamage, false), 'magical');
-	var embraceOfDarknessDamage = calculateDamage(OtherworldFire(magicalDamage, true), 'magical');
-	var plaguedMinionDamage = calculateDamage(PlaguedMinion(physicalDamage, magicalDamage), 'physical');
+	var knowledgeDamage = calculateDamage(Knowledge(physicalDamage, magicalDamage), (physicalDamage > magicalDamage) ? 'physical' : 'magical', false, false);
+	var otherworldFireDamage = calculateDamage(OtherworldFire(magicalDamage, false), 'magical', false, false);
+	var embraceOfDarknessDamage = calculateDamage(OtherworldFire(magicalDamage, true), 'magical', false, false);
+	var plaguedMinionDamage = calculateDamage(PlaguedMinion(physicalDamage, magicalDamage), 'physical', true, false);
 	
     updateDamageValues(darkPrismDamage, "darkPrismRow");
     updateDamageValues(combatInstantHeal, "combatHealInstantRow");
@@ -27,7 +27,7 @@ document.getElementById('calcForm').addEventListener('submit', function (event) 
 	
 });
 
-function calculateDamage(skillDamageLevels, damageType, isInstantDamage=true, isTalent=false) {
+function calculateDamage(skillDamageLevels, damageType, isTalent=false, isBasicSkill=true) {
     var totalDamageLevels = [];
 
     var isPVPTarget = document.getElementById('pvpSwitch').checked;
@@ -49,10 +49,11 @@ function calculateDamage(skillDamageLevels, damageType, isInstantDamage=true, is
     var talentPVEDmgBonusII = (isPVPTarget ? 0 : (parseFloat(document.getElementById('pveBonusII').value) || 0) / 100);
 
     var castleDmg = (parseFloat(document.getElementById('castleDmg').value) || 0) / 100;
+    var exclusiveAttackBonus = (isBasicSkill ? (document.getElementById('exclusiveAttackBonus').checked ? 0.10 : 0) : 0);
 
     for (var level = 0; level < skillDamageLevels.length; level++) {
         var skillDamage = skillDamageLevels[level];
-        var totalDamage = skillDamage * (damageType === 'physical' ? (1 - targetPhysicalReduction) : (1 - targetMagicalReduction)) * (1 + talentPVEDmgBonusI + talentPVEDmgBonusII) * (1 - targetResilience) * (1 + ferocity) * (1 + castleDmg);
+        var totalDamage = skillDamage * (damageType === 'physical' ? (1 - targetPhysicalReduction) : (1 - targetMagicalReduction)) * (1 + talentPVEDmgBonusI + talentPVEDmgBonusII) * (1 - targetResilience) * (1 + ferocity) * (1 + castleDmg + exclusiveAttackBonus);
 
         totalDamage = parseFloat(totalDamage.toFixed(2));
 
@@ -90,13 +91,15 @@ function DarkPrism(physicalDamage, magicalDamage){
     var percentageMagIncreases = [110.0, 115.0, 120.0, 125.0, 130.0];
 
     var relicBonus = document.getElementById('relicBonus').checked ? 0.12 : 0;
+    var unitedBonus = (parseFloat(document.getElementById('unitedAttackBonus').value) || 0) / 100;
+
     var darkPrismBonus = (parseFloat(document.getElementById('darkPrismBonus').value) || 0) / 100;
 
     for (var level = 0; level < 5; level++) {
         if (physicalDamage > magicalDamage) {
-            var damage = (basePhysValues[level] + physicalDamage * (percentagePhysIncreases[level] / 100)) * (1 + relicBonus);
+            var damage = (basePhysValues[level] + physicalDamage * (percentagePhysIncreases[level] / 100)) * (1 + relicBonus + unitedBonus);
         } else {
-            var damage = (baseMagValues[level] + magicalDamage * (percentageMagIncreases[level] / 100 + darkPrismBonus)) * (1 + relicBonus);
+            var damage = (baseMagValues[level] + magicalDamage * (percentageMagIncreases[level] / 100 + darkPrismBonus)) * (1 + relicBonus + unitedBonus);
         }
         damageLevels.push(damage);
     }

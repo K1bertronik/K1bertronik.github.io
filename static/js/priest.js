@@ -4,11 +4,11 @@ document.getElementById('calcForm').addEventListener('submit', function (event) 
     var magicalDamage = parseFloat(document.getElementById('magicdmg').value) || 0;
     var health = parseFloat(document.getElementById('health').value) || 0;
 
-    var haradsTearsDamage = calculateDamage(HaradsTears(magicalDamage));
-    var wordOfPowerDamage = calculateDamage(WordOfPower(magicalDamage));
+    var haradsTearsDamage = calculateDamage(HaradsTears(magicalDamage), true, false, true);
+    var wordOfPowerDamage = calculateDamage(WordOfPower(magicalDamage), true, false, true);
     var holyShield = HolyShield(magicalDamage);
     var healingTouchHeal = calculateHeal(HealingTouch(magicalDamage));
-    var elusiveThreatDamage = calculateDamage(ElusiveThreat(magicalDamage)[0], false, false, ElusiveThreat(magicalDamage)[1]);
+    var elusiveThreatDamage = calculateDamage(ElusiveThreat(magicalDamage)[0], false, false, false, ElusiveThreat(magicalDamage)[1]);
     var paybackDamage = calculateDamage(Payback(magicalDamage));
     var redemptionHeal = calculateHeal(Redemption(magicalDamage));
     var mysticMarkDamage = calculateDamage(MysticMark(magicalDamage));
@@ -31,7 +31,7 @@ document.getElementById('calcForm').addEventListener('submit', function (event) 
     updateDamageValues(punishOfPainDamage, "punishOfPainRow");
 });
 
-function calculateDamage(skillDamageLevels, isInstantDamage=true, isTalent=false, bonusPenetration=[]) {
+function calculateDamage(skillDamageLevels, isInstantDamage=true, isTalent=false, isBasicSkill=false, bonusPenetration=[]) {
     var totalDamageLevels = [];
 
     var isPVPTarget = document.getElementById('pvpSwitch').checked;
@@ -47,13 +47,14 @@ function calculateDamage(skillDamageLevels, isInstantDamage=true, isTalent=false
     var talentPVEDmgBonusII = (isPVPTarget ? 0 : (parseFloat(document.getElementById('pveBonusII').value) || 0) / 100);
 
     var castleDmg = (isTalent ? 0 : (parseFloat(document.getElementById('castleDmg').value) || 0) / 100);
+    var exclusiveAttackBonus = (isBasicSkill ? (document.getElementById('exclusiveAttackBonus').checked ? 0.10 : 0) : 0);
 
-    var drunkLightBonus = (isPVPTarget || !isInstantDamage ? 0 : (document.getElementById('drunkLightBonus').checked ? 0.15 : 0))
+    var drunkLightBonus = (isPVPTarget || !isInstantDamage ? 0 : (document.getElementById('drunkLightBonus').checked ? 0.15 : 0));
 
     for (var level = 0; level < skillDamageLevels.length; level++) {
         var skillDamage = skillDamageLevels[level];
         var bonusPenetrationValue = bonusPenetration.length > level ? (bonusPenetration[level] / 100) : 0;
-        var totalDamage = skillDamage * (1 - Math.max(0, targetMagicalDefence - (penetration + bonusPenetrationValue))) * (1 + talentPVEDmgBonusI + talentPVEDmgBonusII + drunkLightBonus) * (1 - targetResilience) * (1 + ferocity) * (1 + castleDmg);
+        var totalDamage = skillDamage * (1 - Math.max(0, targetMagicalDefence - (penetration + bonusPenetrationValue))) * (1 + talentPVEDmgBonusI + talentPVEDmgBonusII + drunkLightBonus) * (1 - targetResilience) * (1 + ferocity) * (1 + castleDmg + exclusiveAttackBonus);
         totalDamage = parseFloat(totalDamage.toFixed(2));
 
         totalDamageLevels.push(totalDamage);
@@ -87,12 +88,14 @@ function HaradsTears(magicalDamage){
     var percentageIncreases = [110.0, 115.0, 120.0, 125.0, 130.0];
 
     var relicBonus = document.getElementById('relicBonus').checked ? 0.12 : 0;
+    var unitedBonus = (parseFloat(document.getElementById('unitedAttackBonus').value) || 0) / 100;
+
     var haradsTearsBonus = (parseFloat(document.getElementById('haradsTearsBonus').value) || 0) / 100;
     var haradsTearsBonusI = document.getElementById('haradsTearsBonusI').checked ? 0.075 : 0;
     var haradsTearsBonusII = (parseFloat(document.getElementById('haradsTearsBonusII').value) || 0) / 100;
 
     for (var level = 0; level < 5; level++) {
-        var damage = (baseValues[level] + magicalDamage * (percentageIncreases[level] / 100 + haradsTearsBonus + haradsTearsBonusI + haradsTearsBonusII)) * (1 + relicBonus);
+        var damage = (baseValues[level] + magicalDamage * (percentageIncreases[level] / 100 + haradsTearsBonus + haradsTearsBonusI + haradsTearsBonusII)) * (1 + relicBonus + unitedBonus);
         damageLevels.push(damage);
     }
 

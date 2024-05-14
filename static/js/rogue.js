@@ -4,7 +4,7 @@ document.getElementById('calcForm').addEventListener('submit', function (event) 
     var physicalDamage = parseFloat(document.getElementById('physdmg').value) || 0;
     var health = parseFloat(document.getElementById('health').value) || 0;
 
-    var mercilessStrikeDamage = calculateDamage(MercilessStrike(physicalDamage));
+    var mercilessStrikeDamage = calculateDamage(MercilessStrike(physicalDamage), true, true);
     var elusiveJumpDamage = calculateDamage(ElusiveJump(physicalDamage));
     var elusiveJumpWithPoisonDamage = ElusiveJumpWithPoison(elusiveJumpDamage);
     var poisonousBladesDamage = calculateDamage(PoisonousBlades(physicalDamage), false);
@@ -29,7 +29,7 @@ document.getElementById('calcForm').addEventListener('submit', function (event) 
     updateDamageValues(trickiestTechHeal, "trickiestTechWithPoisonHealRow");
 });
 
-function calculateDamage(skillDamageLevels, isInstantDamage=true) {
+function calculateDamage(skillDamageLevels, isInstantDamage=true, isBasicSkill=false) {
     var totalDamageLevels = [];
 
     var isPVPTarget = document.getElementById('pvpSwitch').checked;
@@ -53,10 +53,11 @@ function calculateDamage(skillDamageLevels, isInstantDamage=true) {
     var seriesBonus = (isInstantDamage ? (parseFloat(document.getElementById('seriesBonus').value) || 0) / 100 : 0);
 
     var castleDmg = (parseFloat(document.getElementById('castleDmg').value) || 0) / 100;
+    var exclusiveAttackBonus = (isBasicSkill ? (document.getElementById('exclusiveAttackBonus').checked ? 0.10 : 0) : 0);
 
     for (var level = 0; level < skillDamageLevels.length; level++) {
         var skillDamage = skillDamageLevels[level];
-        var totalDamage = skillDamage * (1 - Math.max(0, targetPhysicalDefence - (penetration + dotPenBonus + instPenBonus))) * (1 + talentDmgBonus + talentPVEDmgBonusI + talentPVEDmgBonusII + bladeEchoBonus + seriesBonus) * (1 - targetResilience) * (1 + ferocity) * (1 + castleDmg);
+        var totalDamage = skillDamage * (1 - Math.max(0, targetPhysicalDefence - (penetration + dotPenBonus + instPenBonus))) * (1 + talentDmgBonus + talentPVEDmgBonusI + talentPVEDmgBonusII + bladeEchoBonus + seriesBonus) * (1 - targetResilience) * (1 + ferocity) * (1 + castleDmg + exclusiveAttackBonus);
         totalDamage = parseFloat(totalDamage.toFixed(2));
 
         totalDamageLevels.push(totalDamage);
@@ -89,10 +90,12 @@ function MercilessStrike(physicalDamage){
     var percentageIncreases = [140.0, 145.0, 150.0, 155.0, 160.0];
 
     var relicBonus = document.getElementById('relicBonus').checked ? 0.12 : 0;
+    var unitedBonus = (parseFloat(document.getElementById('unitedAttackBonus').value) || 0) / 100;
+
     var strikeBonus = (document.getElementById('strikeBonus').checked ? 0.05 : 0) + (document.getElementById('strikeBonusIII').checked ? 0.08 : 0);
 
     for (var level = 0; level < 5; level++) {
-        var damage = (baseValues[level] + physicalDamage * (percentageIncreases[level] / 100 + strikeBonus)) * (1 + relicBonus);
+        var damage = (baseValues[level] + physicalDamage * (percentageIncreases[level] / 100 + strikeBonus)) * (1 + relicBonus + unitedBonus);
         damageLevels.push(damage);
     }
 

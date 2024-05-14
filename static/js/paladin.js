@@ -5,8 +5,8 @@ document.getElementById('calcForm').addEventListener('submit', function (event) 
     var magicalDamage = parseFloat(document.getElementById('magicdmg').value) || 0;
     var health = parseFloat(document.getElementById('health').value) || 0;
 	
-	var purifyingDamage = calculateDamage(Purifying(physicalDamage), 'physical');
-    var purifyingDotDamage = calculateDamage(PurifyingDot(magicalDamage), 'magical');
+	var purifyingDamage = calculateDamage(Purifying(physicalDamage), 'physical', false, true);
+    var purifyingDotDamage = calculateDamage(PurifyingDot(magicalDamage), 'magical', false, true);
     var heavenLightHeal = calculateHeal(HeavenLight(magicalDamage));
     var divineLightbringerHeal = calculateHeal(DivineLightbringer(HeavenLight(magicalDamage)));
     var haradsBannerDamage = calculateDamage(HaradsBanner(magicalDamage), 'magical');
@@ -42,7 +42,7 @@ document.getElementById('calcForm').addEventListener('submit', function (event) 
     updateDamageValues(intercessionHeal, "intercessionRow");
 });
 
-function calculateDamage(skillDamageLevels, damageType, isTalent=false) {
+function calculateDamage(skillDamageLevels, damageType, isTalent=false, isBasicSkill=false) {
     var totalDamageLevels = [];
 
     var isPVPTarget = document.getElementById('pvpSwitch').checked;
@@ -64,12 +64,13 @@ function calculateDamage(skillDamageLevels, damageType, isTalent=false) {
     var talentPVEDmgBonusII = (isPVPTarget ? 0 : (parseFloat(document.getElementById('pveBonusII').value) || 0) / 100);
 
     var castleDmg = (parseFloat(document.getElementById('castleDmg').value) || 0) / 100;
+    var exclusiveAttackBonus = (isBasicSkill ? (document.getElementById('exclusiveAttackBonus').checked ? 0.10 : 0) : 0);
 
     var sacredTeachingBonus = (isPVPTarget ? 0 : (document.getElementById('sacredTeachingBonus').checked ? 0.15 : 0));
 
     for (var level = 0; level < skillDamageLevels.length; level++) {
         var skillDamage = skillDamageLevels[level];
-        var totalDamage = skillDamage * (damageType === 'physical' ? (1 - targetPhysicalReduction) : (1 - targetMagicalReduction)) * (1 + talentPVEDmgBonusI + talentPVEDmgBonusII + sacredTeachingBonus) * (1 - targetResilience) * (1 + ferocity) * (1 + castleDmg);
+        var totalDamage = skillDamage * (damageType === 'physical' ? (1 - targetPhysicalReduction) : (1 - targetMagicalReduction)) * (1 + talentPVEDmgBonusI + talentPVEDmgBonusII + sacredTeachingBonus) * (1 - targetResilience) * (1 + ferocity) * (1 + castleDmg + exclusiveAttackBonus);
 
         totalDamage = parseFloat(totalDamage.toFixed(2));
 
@@ -104,10 +105,12 @@ function Purifying(physicalDamage){
     var percentageIncreases = [115.0, 120.0, 125.0, 130.0, 135.0];
 
     var relicBonus = document.getElementById('relicBonus').checked ? 0.12 : 0;
+    var unitedBonus = (parseFloat(document.getElementById('unitedAttackBonus').value) || 0) / 100;
+
     var purifyingBonus = (parseFloat(document.getElementById('purifyingBonus').value) || 0) / 100;
 
     for (var level = 0; level < 5; level++) {
-        var damage = baseValues[level] + physicalDamage * (percentageIncreases[level] / 100 + purifyingBonus) * (1 + relicBonus);
+        var damage = baseValues[level] + physicalDamage * (percentageIncreases[level] / 100 + purifyingBonus) * (1 + relicBonus + unitedBonus);
         damageLevels.push(damage);
     }
 
@@ -121,10 +124,12 @@ function PurifyingDot(magicalDamage){
     var percentageIncreases = [35.0, 40.0, 45.0, 50.0, 55.0];
 
     var relicBonus = document.getElementById('relicBonus').checked ? 0.12 : 0;
+    var unitedBonus = (parseFloat(document.getElementById('unitedAttackBonus').value) || 0) / 100;
+
     var purifyingDotBonus = (parseFloat(document.getElementById('purifyingDotBonus').value) || 0) / 100;
 
     for (var level = 0; level < 5; level++) {
-        var damage = baseValues[level] + magicalDamage * (percentageIncreases[level] / 100 + purifyingDotBonus) * (1 + relicBonus);
+        var damage = baseValues[level] + magicalDamage * (percentageIncreases[level] / 100 + purifyingDotBonus) * (1 + relicBonus + unitedBonus);
         damageLevels.push(damage);
     }
 

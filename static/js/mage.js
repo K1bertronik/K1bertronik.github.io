@@ -9,12 +9,12 @@ document.getElementById('calcForm').addEventListener('submit', function (event) 
     var fireBallDamage = calculateDamage(FireBall(magicalDamage), true, isPyromaniac);
     var timeWarpDamage = calculateDamage(TimeWarp(magicalDamage));
     var shatteredStoneDamage = calculateDamage(ShatteredStone(magicalDamage));
-    var blazingGroundDamage = calculateDamage(BlazingGround(magicalDamage), false);
-    var frostboltDamage = calculateDamage(Frostbolt(magicalDamage), true, isPyromaniac);
-    var overloadDamage = calculateDamage(Overload(magicalDamage), false);
+    var blazingGroundDamage = calculateDamage(BlazingGround(magicalDamage), false, false, false, false);
+    var frostboltDamage = calculateDamage(Frostbolt(magicalDamage), true, isPyromaniac, false, false);
+    var overloadDamage = calculateDamage(Overload(magicalDamage), false, false, false, false);
     var sheafOfLightningHeal = calculateHeal(SheafOfLightning(overloadDamage));
-    var roaringFlameDamage = calculateDamage(RoaringFlame(magicalDamage), true, isPyromaniac);
-    var auraOfFireDamage = calculateDamage(AuraOfFire(magicalDamage), false, isPyromaniac);
+    var roaringFlameDamage = calculateDamage(RoaringFlame(magicalDamage), true, isPyromaniac, false, false);
+    var auraOfFireDamage = calculateDamage(AuraOfFire(magicalDamage), false, isPyromaniac, false, false);
 
     updateDamageValues(fireBallDamage, "fireBallRow");
     updateDamageValues(timeWarpDamage, "tiweWarpRow");
@@ -27,7 +27,7 @@ document.getElementById('calcForm').addEventListener('submit', function (event) 
     updateDamageValues(auraOfFireDamage, "auraOfFireRow");
 });
 
-function calculateDamage(skillDamageLevels, isInstantDamage=true, isPyromaniac=false, isTalent=false) {
+function calculateDamage(skillDamageLevels, isInstantDamage=true, isPyromaniac=false, isTalent=false, isBasicSkill=true) {
     var totalDamageLevels = [];
 	
 	var isPVPTarget = document.getElementById('pvpSwitch').checked;
@@ -48,13 +48,14 @@ function calculateDamage(skillDamageLevels, isInstantDamage=true, isPyromaniac=f
     var instPenBonus = (!isInstantDamage ? 0 : (parseFloat(document.getElementById('instPenBonus').value) || 0) / 100);
 
     var castleDmg = (parseFloat(document.getElementById('castleDmg').value) || 0) / 100;
+    var exclusiveAttackBonus = (isBasicSkill ? (document.getElementById('exclusiveAttackBonus').checked ? 0.10 : 0) : 0);
 
     var excessEnergyBonus = document.getElementById('excessEnergyBonus').checked ? 0.12 : 0;
     var natureBonus = (isInstantDamage ? (document.getElementById('natureBonus').checked ? 0.10 : 0) : 0);
 
     for (var level = 0; level < skillDamageLevels.length; level++) {
         var skillDamage = skillDamageLevels[level];
-        var totalDamage = skillDamage * (1 - Math.max(0, targetMagicalDefence - (penetration + dotPenBonus + instPenBonus))) * (1 + talentDmgBonus + talentPVEDmgBonusI + talentPVEDmgBonusII + excessEnergyBonus + natureBonus) * (1 - targetResilience) * (1 + ferocity) * (1 + castleDmg);
+        var totalDamage = skillDamage * (1 - Math.max(0, targetMagicalDefence - (penetration + dotPenBonus + instPenBonus))) * (1 + talentDmgBonus + talentPVEDmgBonusI + talentPVEDmgBonusII + excessEnergyBonus + natureBonus) * (1 - targetResilience) * (1 + ferocity) * (1 + castleDmg + exclusiveAttackBonus);
         if (isPyromaniac) {
             var critBoost = (parseFloat(document.getElementById('critBoost').value) || 0) / 100;
             totalDamage = totalDamage * ((isPVPTarget ? 1.5: 2) + critBoost + 0.5);
@@ -93,12 +94,13 @@ function FireBall(magicalDamage){
     var percentageIncreases = [130.0, 140.0, 150.0, 160.0, 170.0];
 
     var relicBonus = document.getElementById('relicBonus').checked ? 0.12 : 0;
+    var unitedBonus = (parseFloat(document.getElementById('unitedAttackBonus').value) || 0) / 100;
 
     var fireBallBonus = document.getElementById('fireBallBonus').checked ? 0.05 : 0;
     var fireBallBonusI = (parseFloat(document.getElementById('fireBallBonusI').value) || 0) / 100;
 
     for (var level = 0; level < 5; level++) {
-        var damage = (baseValues[level] + magicalDamage * (percentageIncreases[level] / 100 + fireBallBonus + fireBallBonusI)) * (1 + relicBonus);
+        var damage = (baseValues[level] + magicalDamage * (percentageIncreases[level] / 100 + fireBallBonus + fireBallBonusI)) * (1 + relicBonus + unitedBonus);
         damageLevels.push(damage);
     }
 

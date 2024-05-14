@@ -7,12 +7,12 @@ document.getElementById('calcForm').addEventListener('submit', function (event) 
 
     var fatalShotDamage = calculateDamage(FatalShot(physicalDamage));
     var poisonedArrowDamage = calculateDamage(PoisonedArrow(physicalDamage), false);
-    var poisonousSaberDamage = calculateDamage(PoisonousSaber(physicalDamage), false);
-    var sappingShotDamage = calculateDamage(SappingShot(physicalDamage));
-    var pathfindersShotDamage = calculateDamage(PathfindersShot(physicalDamage));
-    var forestTrapDamage = calculateDamage(ForestTrap(physicalDamage));
-    var cobraBiteDamage = calculateDamage(CobraBite(physicalDamage), false, true);
-    var poisonedTipDamage = calculateDamage(PoisonedTip(physicalDamage), false, true);
+    var poisonousSaberDamage = calculateDamage(PoisonousSaber(physicalDamage), false, false, false);
+    var sappingShotDamage = calculateDamage(SappingShot(physicalDamage), true, false, false);
+    var pathfindersShotDamage = calculateDamage(PathfindersShot(physicalDamage), true, false, false);
+    var forestTrapDamage = calculateDamage(ForestTrap(physicalDamage), true, false, false);
+    var cobraBiteDamage = calculateDamage(CobraBite(physicalDamage), false, true, false);
+    var poisonedTipDamage = calculateDamage(PoisonedTip(physicalDamage), false, true, false);
 
     updateDamageValues(fatalShotDamage, "fatalShotRow");
     updateDamageValues(poisonedArrowDamage, "poisonedArrowRow");
@@ -25,7 +25,7 @@ document.getElementById('calcForm').addEventListener('submit', function (event) 
 
 });
 
-function calculateDamage(skillDamageLevels, isInstantDamage=true, isTalent=false) {
+function calculateDamage(skillDamageLevels, isInstantDamage=true, isTalent=false, isBasicSkill=true) {
     var totalDamageLevels = [];
 
     var isPVPTarget = document.getElementById('pvpSwitch').checked;
@@ -46,12 +46,13 @@ function calculateDamage(skillDamageLevels, isInstantDamage=true, isTalent=false
     var instPenBonus = (!isInstantDamage ? 0 : (parseFloat(document.getElementById('instPenBonus').value) || 0) / 100);
 
     var castleDmg = (parseFloat(document.getElementById('castleDmg').value) || 0) / 100;
+    var exclusiveAttackBonus = (isBasicSkill ? (document.getElementById('exclusiveAttackBonus').checked ? 0.10 : 0) : 0);
 
     var huntersMarkBonus = HuntersMark((parseFloat(document.getElementById('huntersMarkLevel').value) || 0), (parseFloat(document.getElementById('huntersMarkCount').value) || 0));
 
     for (var level = 0; level < skillDamageLevels.length; level++) {
         var skillDamage = skillDamageLevels[level];
-        var totalDamage = skillDamage * (1 - Math.max(0, targetPhysicalDefence - (penetration + dotPenBonus + instPenBonus))) * (1 + talentDmgBonus + talentPVEDmgBonusI + talentPVEDmgBonusII) * (1 - targetResilience) * (1 + ferocity) * (1 + castleDmg) * (1 + huntersMarkBonus);
+        var totalDamage = skillDamage * (1 - Math.max(0, targetPhysicalDefence - (penetration + dotPenBonus + instPenBonus))) * (1 + talentDmgBonus + talentPVEDmgBonusI + talentPVEDmgBonusII) * (1 - targetResilience) * (1 + ferocity) * (1 + castleDmg + exclusiveAttackBonus) * (1 + huntersMarkBonus);
         totalDamage = parseFloat(totalDamage.toFixed(2));
 
         totalDamageLevels.push(totalDamage);
@@ -84,10 +85,12 @@ function FatalShot(physicalDamage){
     var percentageIncreases = [100.0, 103.0, 106.0, 109.0, 112.0];
 
     var relicBonus = document.getElementById('relicBonus').checked ? 0.12 : 0;
+    var unitedBonus = (parseFloat(document.getElementById('unitedAttackBonus').value) || 0) / 100;
+
     var fatalShotBonus = (parseFloat(document.getElementById('fatalShotBonus').value) || 0) / 100;
 
     for (var level = 0; level < 5; level++) {
-        var damage = (baseValues[level] + physicalDamage * (percentageIncreases[level] / 100 + fatalShotBonus)) * (1 + relicBonus);
+        var damage = (baseValues[level] + physicalDamage * (percentageIncreases[level] / 100 + fatalShotBonus)) * (1 + relicBonus + unitedBonus);
         damageLevels.push(damage);
     }
 

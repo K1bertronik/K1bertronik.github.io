@@ -10,9 +10,9 @@ document.getElementById('calcForm').addEventListener('submit', function (event) 
     var vortexBladeBoostedDamage = calculateDamage(VortexBlade(physicalDamage)[1]);
     var hamstringDamage = calculateDamage(Hamstring(physicalDamage), false);
     var magicTransformShield = MagicTransformation(physicalDamage, maxHealth, currentHealth);
-    var sonicBoomDamage = calculateDamage(SonicBoom(physicalDamage), false);
-    var counterattackDamage = calculateDamage(Counterattack(physicalDamage));
-    var strikeHurricaneDamage = calculateDamage(StrikeHurricane(physicalDamage));
+    var sonicBoomDamage = calculateDamage(SonicBoom(physicalDamage), false, false);
+    var counterattackDamage = calculateDamage(Counterattack(physicalDamage), true, false);
+    var strikeHurricaneDamage = calculateDamage(StrikeHurricane(physicalDamage), true, false);
     var markOfBladeHeal = calculateHeal(MarkOfBlade(maxHealth));
 
     updateDamageValues(flashStrikeDamage, "flashStrikeRow");
@@ -26,7 +26,7 @@ document.getElementById('calcForm').addEventListener('submit', function (event) 
     updateDamageValues(markOfBladeHeal, "markOfBladeRow");
 });
 
-function calculateDamage(skillDamageLevels, isInstantDamage=true) {
+function calculateDamage(skillDamageLevels, isInstantDamage=true, isBasicSkill=true) {
     var totalDamageLevels = [];
 
     var isPVPTarget = document.getElementById('pvpSwitch').checked;
@@ -47,10 +47,13 @@ function calculateDamage(skillDamageLevels, isInstantDamage=true) {
     var instPenBonus = (!isInstantDamage ? 0 : (parseFloat(document.getElementById('instPenBonus').value) || 0) / 100);
 
     var castleDmg = (parseFloat(document.getElementById('castleDmg').value) || 0) / 100;
+    var exclusiveAttackBonus = (isBasicSkill ? (document.getElementById('exclusiveAttackBonus').checked ? 0.10 : 0) : 0);
+
+    var strikeOnslaughtBonus = (parseFloat(document.getElementById('strikeOnslaughtBonus').value) || 0) / 100;
 
     for (var level = 0; level < skillDamageLevels.length; level++) {
         var skillDamage = skillDamageLevels[level];
-        var totalDamage = skillDamage * (1 - Math.max(0, targetPhysicalDefence - (penetration + dotPenBonus + instPenBonus))) * (1 + talentDmgBonus + talentPVEDmgBonusI + talentPVEDmgBonusII) * (1 - targetResilience) * (1 + ferocity) * (1 + castleDmg);
+        var totalDamage = skillDamage * (1 - Math.max(0, targetPhysicalDefence - (penetration + dotPenBonus + instPenBonus))) * (1 + talentDmgBonus + talentPVEDmgBonusI + talentPVEDmgBonusII + strikeOnslaughtBonus) * (1 - targetResilience) * (1 + ferocity) * (1 + castleDmg + exclusiveAttackBonus);
         totalDamage = parseFloat(totalDamage.toFixed(2));
 
         totalDamageLevels.push(totalDamage);
@@ -83,10 +86,12 @@ function FlashStrike(physicalDamage){
     var percentageIncreases = [140.0, 145.0, 150.0, 155.0, 160.0];
 
     var relicBonus = document.getElementById('relicBonus').checked ? 0.12 : 0;
+    var unitedBonus = (parseFloat(document.getElementById('unitedAttackBonus').value) || 0) / 100;
+
     var strikeBonus = (document.getElementById('strikeBonus').checked ? 0.08 : 0);
 
     for (var level = 0; level < 5; level++) {
-        var damage = (baseValues[level] + physicalDamage * (percentageIncreases[level] / 100 + strikeBonus)) * (1 + relicBonus);
+        var damage = (baseValues[level] + physicalDamage * (percentageIncreases[level] / 100 + strikeBonus)) * (1 + relicBonus + unitedBonus);
         damageLevels.push(damage);
     }
 
