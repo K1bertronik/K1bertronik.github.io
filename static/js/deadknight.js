@@ -10,8 +10,8 @@ document.getElementById('calcForm').addEventListener('submit', function (event) 
 	var steelHurricaneDamage = calculateDamage(SteelHurricane(physicalDamage, magicalDamage), 'physical', false, false);
 	var enjoyingBloodDamage = EnjoyingBlood(steelHurricaneDamage)[0];
 	var enjoyingBloodHeal = calculateHeal(EnjoyingBlood(steelHurricaneDamage)[1]);
-	var sharpShadowDamage = calculateDamage(SharpShadow(magicalDamage, health)[0], 'magical', false, false);
-	var sharpShadowHeal = calculateHeal(SharpShadow(magicalDamage, health)[1]);
+	var sharpShadowDamage = calculateDamage(SharpShadow(magicalDamage, physicalDamage, health)[0], 'magical', false, false);
+	var sharpShadowHeal = calculateHeal(SharpShadow(magicalDamage, physicalDamage, health)[1]);
 	var knightsCurseDamage = calculateDamage(KnightsCurse(magicalDamage), 'magical', false, false);
 	var echoOfForsakenDamage = calculateDamage(KnightsCurse(magicalDamage, true), 'magical', false, false);
 	
@@ -154,17 +154,18 @@ function EnjoyingBlood(skillLevels){
     return [damageLevels, healLevels];
 }
 
-function SharpShadow(magicalDamage, health){
+function SharpShadow(magicalDamage, physicalDamage, health){
 	var damageLevels = [];
     var healLevels = [];
 	
-	var percentageDamageIncreases = [135.0, 150.0, 170.0, 190.0];
-	var percentageHealIncreases = [10.0, 12.0, 16.0, 20.0];
+	var percentagePhysIncreases = [55.0, 65.0, 75.0, 90.0];
+	var percentageMagIncreases = [125.0, 135.0, 145.0, 160.0];
+	var percentageHealIncreases = [8.0, 10.0, 13.0, 16.0];
 	
-	var sharpShadowBonus = document.getElementById('steelHurricaneBonus').checked ? 0.02 : 0;
+	var sharpShadowBonus = document.getElementById('sharpShadowBonus').checked ? 0.02 : 0;
 	
 	for (var level = 0; level < 4; level++) {
-        var damage = magicalDamage * (percentageDamageIncreases[level] / 100);
+        var damage = magicalDamage * (percentageMagIncreases[level] / 100) + physicalDamage * (percentagePhysIncreases[level] / 100);
 		var heal = health * (percentageHealIncreases[level] / 100 + sharpShadowBonus);
 		
 		damageLevels.push(damage);
