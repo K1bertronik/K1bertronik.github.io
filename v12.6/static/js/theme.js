@@ -65,8 +65,9 @@ document.getElementById("toggle-theme-button").addEventListener("click", functio
 
 var savedTheme = getThemeLocalStorage();
 if (savedTheme) {
+    // Если есть сохраненная тема, применяем её
     applyTheme(savedTheme);
 } else {
 
-    applyTheme("light");
+    applyTheme("light"); // или любую другую тему по умолчанию
 }
