@@ -150,7 +150,11 @@ function MagicTransformation(physicalDamage, maxHealth, currentHealth){
     var bastionBonus = document.getElementById('bastionBonus').checked ? 0.2 : 0;
 
     for (var level = 0; level < 4; level++) {
-        var shield = physicalDamage * (percentageIncreases[level] / 100 + magicTransformBonus) + ((maxHealth - currentHealth) * 0.05) * (percentageHealthIncreases[level] / 100) * (1 + bastionBonus);
+        var baseshield = physicalDamage * (percentageIncreases[level] / 100 + magicTransformBonus);
+        var boostPerHealth = (((maxHealth - currentHealth) / maxHealth * 100) / 5) * (percentageHealthIncreases[level])
+
+        var shield = baseshield * (1 + boostPerHealth / 100 + bastionBonus);
+        
         shieldLevels.push(parseFloat(shield.toFixed(2)));
     }
 
