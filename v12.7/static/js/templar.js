@@ -231,12 +231,12 @@ function ParticleOfLife(physicalDamage, magicalDamage){
 
     var relentlessBonus = document.getElementById('isRelentless').checked ? 0.5 : 0;
 
-    var particleOfLifeBonusAlm = (parseFloat(document.getElementById('particleOfLifeBonusAlm').value) || 0) / 100;
+    var particleOfLifeBonusAlm = document.getElementById('particleOfLifeBonusAlm').value;
 
     particleOfLifeBonusAlm = particleOfLifeBonusAlm.split(',');
 
-    var physParticleOfLifeBonusAlm = parseFloat(particleOfLifeBonusAlm[0]);
-    var magParticleOfLifeBonusAlm = parseFloat(particleOfLifeBonusAlm[1]);
+    var physParticleOfLifeBonusAlm = parseFloat(particleOfLifeBonusAlm[0]) / 100;
+    var magParticleOfLifeBonusAlm = parseFloat(particleOfLifeBonusAlm[1]) / 100;
 
 	for (var level = 0; level < 4; level++) {
         if (physicalDamage > magicalDamage) {
