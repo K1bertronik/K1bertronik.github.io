@@ -155,8 +155,8 @@ function HaradsTeaching(physicalDamage, magicalDamage){
 
     haradsTeachingsBonusAlm = haradsTeachingsBonusAlm.split(',');
 
-    var physHaradsTeachingsBonusAlm = parseFloat(haradsTeachingsBonusAlm[0]);
-    var magHaradsTeachingsBonusAlm = parseFloat(haradsTeachingsBonusAlm[1]);
+    var physHaradsTeachingsBonusAlm = parseFloat(haradsTeachingsBonusAlm[0]) / 100;
+    var magHaradsTeachingsBonusAlm = parseFloat(haradsTeachingsBonusAlm[1]) / 100;
 	
 	for (var level = 0; level < 4; level++) {
         if (physicalDamage > magicalDamage) {
